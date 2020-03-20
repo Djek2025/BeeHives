@@ -1,0 +1,23 @@
+<resources>
+    <string-array name="language_values">
+        <item>en</item>
+        <item>ua</item>
+    </string-array>
+
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Ukrainian</item>
+    </string-array>
+
+
+    <string-array name="units_values">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
+
+    <string-array name="units_entries">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+</resources>

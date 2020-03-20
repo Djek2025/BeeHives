@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_hives"
+            android:checked="true"
+            android:icon="@drawable/round_storage_24"
+            android:title="@string/hives" />
+        <item
+            android:id="@+id/navigation_map"
+            android:icon="@drawable/baseline_place_24"
+            android:title="@string/map" />
+        <item
+            android:id="@+id/navigation_graphs"
+            android:icon="@drawable/baseline_poll_24"
+            android:title="@string/graphs" />
+        <item
+            android:id="@+id/navigation_todo_list"
+            android:icon="@drawable/round_format_list_numbered_24"
+            android:title="@string/todo_list"/>
+        <item
+            android:id="@+id/navigation_scanner"
+            android:icon="@drawable/round_local_offer_24"
+            android:title="@string/scan_label"/>
+    </group>
+
+    <group
+        android:id="@+id/group_divider"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_settings"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/settings" />
+
+        <item
+            android:id="@+id/navigation_share"
+            android:icon="@drawable/round_share_24"
+            android:title="@string/share"/>
+
+        <item
+            android:id="@+id/navigation_about"
+            android:icon="@drawable/round_info_24"
+            android:title="@string/about"/>
+    </group>
+
+</menu>

@@ -1,0 +1,35 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference/>
+    <ListPreference/>
+    <ListPreference/>
+
+    <PreferenceCategory app:title="General">
+
+        <ListPreference
+            app:defaultValue="metric"
+            app:entries="@array/units_entries"
+            app:entryValues="@array/units_values"
+            app:key="units"
+            app:title="Units"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="en"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="language"
+            app:title="Language"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="night_mode"
+            app:summaryOff="Night mode disabled"
+            app:summaryOn="Night mode enabled"
+            app:title="Night mode" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
