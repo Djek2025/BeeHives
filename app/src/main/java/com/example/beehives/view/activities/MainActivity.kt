@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Apiary
 import com.example.beehives.view.fragments.HivesFragment
+import com.example.beehives.view.fragments.MapsFragment
 import com.example.beehives.view.fragments.SettingsFragment
 import com.example.beehives.viewModel.MainViewModel
 import com.google.android.material.navigation.NavigationView
@@ -68,7 +69,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.navigation_hives -> supportFragmentManager.beginTransaction()
                 .replace(R.id.container, HivesFragment.newInstance(viewModel, currentApiaryId))
                 .commit()
-            R.id.navigation_map -> true
+            R.id.navigation_map -> supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.animator.card_flip_right_enter,
+                    R.animator.card_flip_right_exit,
+                    R.animator.card_flip_left_enter,
+                    R.animator.card_flip_left_exit)
+                .replace(R.id.container, MapsFragment())
+                .addToBackStack("map")
+                .commit()
             R.id.navigation_graphs -> true
             R.id.navigation_todo_list -> true
             R.id.navigation_scanner -> true
@@ -78,7 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     R.animator.card_flip_left_enter,
                     R.animator.card_flip_left_exit)
                 .replace(R.id.container, SettingsFragment())
-                .addToBackStack(null)
+                .addToBackStack("settings")
                 .commit()
             R.id.navigation_share -> true
             R.id.navigation_about -> true
