@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.beehives"
-        minSdkVersion 25
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -73,7 +73,6 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-analytics:17.2.3'
     implementation 'com.google.firebase:firebase-firestore:21.4.1'
-
 
 
 }

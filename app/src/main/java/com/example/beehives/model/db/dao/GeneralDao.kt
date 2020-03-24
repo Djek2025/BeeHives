@@ -7,17 +7,17 @@ import com.example.beehives.model.db.entities.*
 @Dao
 interface GeneralDao {
 
-    @Query("SELECT * FROM Apiary")
-    fun getAllApiaries(): LiveData<List<Apiary>>
+    @Query("SELECT * FROM Apiary WHERE id = :id")
+    fun getApiaryByIdLd(id: Int): LiveData<Apiary>
 
     @Query("SELECT * FROM Apiary")
-    suspend fun getAllApiariesNoLD(): List<Apiary>
+    fun getAllApiaries(): LiveData<List<Apiary>>
 
     @Query("SELECT * FROM Hive WHERE apiaryId = :apiaryId")
     fun getApiaryHives(apiaryId: Int): LiveData<List<Hive>>
 
     @Query("SELECT * FROM Apiary WHERE id = :id")
-    fun getApiaryById(id: Int): Apiary
+    suspend fun getApiaryById(id: Int): Apiary
 
     @Query("SELECT * FROM Hive WHERE id = :id")
     suspend fun getHiveById(id: Int): Hive
@@ -37,7 +37,6 @@ interface GeneralDao {
     suspend fun insertRevision(item: Revision)
 
     //———————————————————————————————————————————
-
     @Update
     suspend fun updateHive(item: Hive)
 
@@ -47,6 +46,8 @@ interface GeneralDao {
     @Update
     suspend fun updateRevision(item: Revision)
 
+    @Query("UPDATE Apiary SET location = :location WHERE id = :id")
+    suspend fun updateApiaryLocationById(id:Int, location : String)
     //———————————————————————————————————————————
 
     @Delete

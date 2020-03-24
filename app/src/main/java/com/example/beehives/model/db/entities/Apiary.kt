@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Apiary(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    val name: String? = "Apiary",
-    val location: String? = null,
+    var name: String? = "Apiary",
+    var location: String? = null,
     val todoList: String? = null
 )

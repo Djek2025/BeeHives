@@ -19,4 +19,6 @@
     <string name="date">Date</string>
     <string name="frames">Frames</string>
     <string name="note">Note</string>
+    <string name="latitude">Latitude: %1$s° N</string>
+    <string name="longitude">Longitude: %1$s° E</string>
 </resources>

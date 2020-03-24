@@ -9,9 +9,13 @@ class MainRepository(private val dao: GeneralDao) {
 
     fun getApiaryHives(apiaryId: Int) = dao.getApiaryHives(apiaryId)
 
-    fun getApiaryById(id: Int) = dao.getApiaryById(id)
-    suspend fun getHiveById(id: Int) = dao.getHiveById(id)
+    fun getApiaryByIdLd(id: Int) = dao.getApiaryByIdLd(id)
+
     fun getHiveRevisions(hiveId: Int) = dao.getHiveRevisions(hiveId)
+
+    suspend fun getApiaryById(id: Int) =  dao.getApiaryById(id)
+
+    suspend fun getHiveById(id: Int) = dao.getHiveById(id)
 
     suspend fun insertHive(hive: Hive) {
         dao.insertHive(hive)
@@ -19,6 +23,10 @@ class MainRepository(private val dao: GeneralDao) {
 
     suspend fun insertApiary(apiary: Apiary) {
         dao.insertApiary(apiary)
+    }
+
+    suspend fun updateApiary(apiary: Apiary) {
+        dao.updateApiary(apiary)
     }
 
     suspend fun updateHive(hive: Hive) {
@@ -39,5 +47,9 @@ class MainRepository(private val dao: GeneralDao) {
 
     suspend fun deleteRevision(revision: Revision) {
         dao.updateRevision(revision)
+    }
+
+    suspend fun updateApiaryLocationById(id:Int, location : String) {
+        dao.updateApiaryLocationById(id, location)
     }
 }
