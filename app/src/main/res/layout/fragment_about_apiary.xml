@@ -28,17 +28,19 @@
             android:id="@+id/apiaryNameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
             android:inputType="text"
-            android:textSize="32sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <ImageView
+        <Button
             android:id="@+id/buttonSaveName"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/baseline_save_24"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/baseline_save_24"
+            android:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="@+id/apiaryNameEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/apiaryNameEditText"
@@ -48,6 +50,7 @@
             android:id="@+id/lat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="@string/latitude"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,15 +63,16 @@
             android:text="@string/longitude"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/locationImageView"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/lat" />
 
-        <ImageView
+        <Button
             android:id="@+id/locationImageView"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginTop="56dp"
             android:layout_marginEnd="24dp"
-            android:src="@drawable/baseline_add_location_24"
+            android:backgroundTint="@color/colorAccent"
+            android:background="@drawable/baseline_add_location_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/apiaryNameEditText" />
 

@@ -50,10 +50,10 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
         seekBar.setOnSeekBarChangeListener(this)
 
         val calendar = Calendar.getInstance()
-        select_date.text = "${calendar.get(Calendar.DAY_OF_MONTH)}/" +
+        selectDate.text = "${calendar.get(Calendar.DAY_OF_MONTH)}/" +
                 "${calendar.get(Calendar.MONTH + 1)}/" +
                 "${calendar.get(Calendar.YEAR)}"
-        select_date.setOnClickListener {
+        selectDate.setOnClickListener {
             DatePickerDialog(context!!, this,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -72,7 +72,7 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        select_date.text = "$dayOfMonth/${month+1}/$year"
+        selectDate.text = "$dayOfMonth/${month+1}/$year"
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

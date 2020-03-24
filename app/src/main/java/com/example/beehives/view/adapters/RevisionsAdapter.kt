@@ -25,7 +25,7 @@ class RevisionsAdapter (private val inputItems : List<Revision>, val callback : 
     }
 
     private fun setContentBackground(view: View) {
-        view.setBackgroundResource(R.color.design_default_color_background)
+        view.setBackgroundResource(R.color.colorBackground)
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {

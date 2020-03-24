@@ -53,7 +53,7 @@ class AboutApiaryFragment : Fragment() {
 
             when(apiary.location){
                 null,"" -> {
-                    locationImageView.setImageResource(R.drawable.baseline_add_location_24)
+                    locationImageView.setBackgroundResource(R.drawable.baseline_add_location_24)
                     locationImageView.setOnClickListener {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.container, MapsFragment.newInstance(currentApiaryId!!, viewModel, "add"), "map")
@@ -65,7 +65,7 @@ class AboutApiaryFragment : Fragment() {
                     val latLng = apiary.location!!.split(SEPARATOR)
                     lat.text = getString(R.string.latitude, latLng[0])
                     lng.text = getString(R.string.longitude, latLng[1])
-                    locationImageView.setImageResource(R.drawable.baseline_edit_location_24)
+                    locationImageView.setBackgroundResource(R.drawable.baseline_edit_location_24)
                     locationImageView.setOnClickListener {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.container, MapsFragment.newInstance(currentApiaryId!!, viewModel, "edit"), "map")
