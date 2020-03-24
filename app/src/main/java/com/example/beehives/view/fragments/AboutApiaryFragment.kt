@@ -34,6 +34,7 @@ class AboutApiaryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance =true
         arguments?.let {
             currentApiaryId = it.getInt(ARG_CURRENT_APIARY)
         }

@@ -63,10 +63,10 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
         floatingActionButton2.setOnClickListener {
             viewModel.insertRevison(Revision(
                 hiveId = hiveId,
-                date = 2154456L,
+                date = 215445216L,
                 strength = seekBar.progress,
                 frames = "8/12 145mm",
-                note = "New note"))
+                note = noteEditText.text.toString()))
             activity?.onBackPressed()
         }
     }

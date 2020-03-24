@@ -67,6 +67,7 @@ class AboutHiveFragment : Fragment() {
                                     override fun onItemClicked(item: Revision) {
 
                                     }
+
                                 })
                             }
                         })

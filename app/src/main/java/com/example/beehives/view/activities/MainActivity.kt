@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .replace(R.id.container, AboutApiaryFragment.newInstance(currentApiaryId, viewModel), "AboutApiary")
                 .addToBackStack(null)
                 .commit()
+            onBackPressed()
         }
 
         if (HivesFragment.INSTANCE == null){

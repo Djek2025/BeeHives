@@ -45,11 +45,11 @@ class MapsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance = true
         arguments?.let {
             currentApiaryId = it.getInt(ARG_CURRENT_APIARY)
             intent = it.getString(ARG_INTENT)
         }
-        retainInstance = true
     }
 //————————————————————————————————————————————————————————————————————————————————————————————————
 
