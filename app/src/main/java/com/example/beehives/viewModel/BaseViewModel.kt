@@ -1,7 +1,9 @@
 package com.example.beehives.viewModel
 
 import android.app.Application
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.beehives.model.db.MainDatabase
 import com.example.beehives.model.db.entities.Apiary
@@ -17,11 +19,10 @@ import com.google.firebase.firestore.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: MainRepository
     private val database : CollectionReference
-
 
     init {
         val dao = MainDatabase.getDatabase(application).hiveDao()

@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Hive
 import com.example.beehives.view.adapters.HivesAdapter
-import com.example.beehives.viewModel.MainViewModel
+import com.example.beehives.viewModel.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_hives.*
 
 private const val ARG_CURRENT_APIARY_ID = "current_apiary_id"
@@ -18,12 +18,12 @@ private const val ARG_CURRENT_APIARY_ID = "current_apiary_id"
 class HivesFragment : Fragment() {
 
     private var apiaryId : Int = 1
-    private lateinit var viewModel : MainViewModel
+    private lateinit var viewModel : BaseViewModel
 
     companion object {
         var INSTANCE : HivesFragment? = null
         @JvmStatic
-        fun newInstance(vModel : MainViewModel,apiaryId : Int): HivesFragment {
+        fun newInstance(vModel : BaseViewModel, apiaryId : Int): HivesFragment {
             val tempInstance = INSTANCE
             return if (tempInstance == null){
                 val instance = HivesFragment()

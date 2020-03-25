@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Revision
 import com.example.beehives.view.adapters.RevisionsAdapter
-import com.example.beehives.viewModel.MainViewModel
+import com.example.beehives.viewModel.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_about_hive.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -24,11 +24,11 @@ private const val ARG_ID_KEY = "ABOUT_HIVE_KEY"
 class AboutHiveFragment : Fragment() {
 
     private var hiveId: Int? = null
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: BaseViewModel
 
     companion object {
         @JvmStatic
-        fun newInstance(hiveId: Int, vModel: MainViewModel) =
+        fun newInstance(hiveId: Int, vModel: BaseViewModel) =
             AboutHiveFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_ID_KEY, hiveId)

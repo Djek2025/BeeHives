@@ -1,22 +1,19 @@
 package com.example.beehives.view.fragments
 
-import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.example.beehives.R
 import com.example.beehives.view.activities.SEPARATOR
-import com.example.beehives.viewModel.MainViewModel
+import com.example.beehives.viewModel.BaseViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_maps.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,11 +26,11 @@ class MapsFragment : Fragment() {
 
     private var currentApiaryId : Int? = null
     private var intent : String? = null
-    private lateinit var viewModel : MainViewModel
+    private lateinit var viewModel : BaseViewModel
 
     companion object {
         @JvmStatic
-        fun newInstance(currentApiaryId: Int, vm : MainViewModel, intent : String) =
+        fun newInstance(currentApiaryId: Int, vm : BaseViewModel, intent : String) =
             MapsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_CURRENT_APIARY, currentApiaryId)

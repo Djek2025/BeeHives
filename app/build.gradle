@@ -9,6 +9,7 @@ ext {
     dagger_version = "2.26"
     lifecycle_version = "2.2.0"
     dagger_version = "2.27"
+    nav_version = "2.3.0-alpha04"
 }
 
 android {
@@ -30,6 +31,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding{
+        enabled = true
     }
 
 }
@@ -74,5 +79,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.3'
     implementation 'com.google.firebase:firebase-firestore:21.4.1'
 
+    //Navigation
+    implementation"androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation"androidx.navigation:navigation-ui-ktx:$nav_version"
 
 }

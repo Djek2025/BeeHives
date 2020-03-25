@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.beehives.R
 import com.example.beehives.view.activities.SEPARATOR
-import com.example.beehives.viewModel.MainViewModel
+import com.example.beehives.viewModel.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_about_apiary.*
 
 private const val ARG_CURRENT_APIARY = "Current Apiary"
@@ -19,11 +19,11 @@ private const val ARG_CURRENT_APIARY = "Current Apiary"
 class AboutApiaryFragment : Fragment() {
 
     private var currentApiaryId: Int? = null
-    private lateinit var viewModel : MainViewModel
+    private lateinit var viewModel : BaseViewModel
 
     companion object {
         @JvmStatic
-        fun newInstance(currentApiaryId: Int, vm : MainViewModel) =
+        fun newInstance(currentApiaryId: Int, vm : BaseViewModel) =
             AboutApiaryFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_CURRENT_APIARY, currentApiaryId)

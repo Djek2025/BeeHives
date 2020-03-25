@@ -37,6 +37,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/revisionTextView" />
 
+<!--————————————————————————————————————————— Strength ——————————————————————————————————————————-->
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="0dp"
@@ -70,6 +71,7 @@
             app:layout_constraintStart_toEndOf="@id/seekBar"
             app:layout_constraintTop_toTopOf="@+id/seekBar" />
 
+<!--————————————————————————————————————————— Frames installed editText —————————————————————————-->
         <TextView
             android:id="@+id/framesInstalledTextView"
             android:layout_width="wrap_content"
@@ -103,6 +105,74 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/framesInstalledTextView" />
+
+        <TextView
+            android:id="@+id/textViewOf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="of"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextFramesInstall"
+            app:layout_constraintStart_toEndOf="@+id/editTextFramesInstall"
+            app:layout_constraintTop_toTopOf="@+id/editTextFramesInstall" />
+
+        <EditText
+            android:id="@+id/editTextFramesInstall"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/background_for_edit_text"
+            android:backgroundTint="#17000000"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="3"
+            android:minWidth="60dp"
+            app:layout_constraintBottom_toBottomOf="@+id/editText"
+            app:layout_constraintStart_toStartOf="@+id/editText"
+            app:layout_constraintTop_toTopOf="@+id/editText" />
+
+        <EditText
+            android:id="@+id/editTextFramesInstallOf"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_for_edit_text"
+            android:backgroundTint="#17000000"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="3"
+            android:minWidth="60dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewOf"
+            app:layout_constraintStart_toEndOf="@+id/textViewOf"
+            app:layout_constraintTop_toTopOf="@+id/textViewOf" />
+
+<!--————————————————————————————————————————— Note ——————————————————————————————————————————————-->
+        <EditText
+            android:id="@+id/editTextFrameSize"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_for_edit_text"
+            android:backgroundTint="#17000000"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="3"
+            android:minWidth="60dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewSize"
+            app:layout_constraintStart_toEndOf="@+id/textViewSize"
+            app:layout_constraintTop_toTopOf="@+id/textViewSize" />
+
+        <TextView
+            android:id="@+id/textViewSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Size(mm):"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextFramesInstallOf"
+            app:layout_constraintStart_toEndOf="@+id/editTextFramesInstallOf"
+            app:layout_constraintTop_toTopOf="@+id/editTextFramesInstallOf" />
 
         <TextView
             android:id="@+id/noteTextView"
