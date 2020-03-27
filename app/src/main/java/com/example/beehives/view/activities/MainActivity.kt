@@ -1,12 +1,10 @@
 package com.example.beehives.view.activities
 
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
-import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -59,20 +57,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .commit()
             onBackPressed()
         }
+        viewModel.getApiaryByIdLd(currentApiaryId).observe(this, Observer { apiary ->
+            if (apiary.name != null) {
+                navigation_view.getHeaderView(0).header_apiary_name.text = apiary.name
+            }
+        })
 
         if (HivesFragment.INSTANCE == null){
             supportFragmentManager.beginTransaction()
                 .add(R.id.container, HivesFragment.newInstance(viewModel, currentApiaryId), "Hives")
                 .commit()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getApiaryByIdLd(currentApiaryId).observe(this, Observer { apiary ->
-            navigation_view.getHeaderView(0).header_apiary_name.text = apiary.name
-        })
-
     }
 
     override fun onBackPressed() {

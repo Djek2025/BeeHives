@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:indeterminate="false"
-            android:progress="50"
+            android:progress="60"
             app:layout_constraintEnd_toStartOf="@+id/percents"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/strengthTextView" />
@@ -65,6 +65,7 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:text="60%"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/seekBar"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,86 +94,69 @@
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <EditText
-            android:id="@+id/editText"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="8dp"
             android:background="@drawable/button_circle"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/framesInstalledTextView" />
-
-        <TextView
-            android:id="@+id/textViewOf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="of"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextFramesInstall"
-            app:layout_constraintStart_toEndOf="@+id/editTextFramesInstall"
-            app:layout_constraintTop_toTopOf="@+id/editTextFramesInstall" />
-
-        <EditText
-            android:id="@+id/editTextFramesInstall"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="32dp"
-            android:background="@drawable/background_for_edit_text"
-            android:backgroundTint="#17000000"
             android:gravity="center"
-            android:inputType="number"
-            android:maxLength="3"
-            android:minWidth="60dp"
-            app:layout_constraintBottom_toBottomOf="@+id/editText"
-            app:layout_constraintStart_toStartOf="@+id/editText"
-            app:layout_constraintTop_toTopOf="@+id/editText" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/framesInstalledTextView">
 
-        <EditText
-            android:id="@+id/editTextFramesInstallOf"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_for_edit_text"
-            android:backgroundTint="#17000000"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="3"
-            android:minWidth="60dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewOf"
-            app:layout_constraintStart_toEndOf="@+id/textViewOf"
-            app:layout_constraintTop_toTopOf="@+id/textViewOf" />
+            <EditText
+                android:id="@+id/editTextFramesInstall"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/background_for_edit_text"
+                android:backgroundTint="#41787878"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3"
+                android:minWidth="60dp" />
+
+            <TextView
+                android:id="@+id/textViewOf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/of"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextFramesInstallOf"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/background_for_edit_text"
+                android:backgroundTint="#41787878"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3"
+                android:minWidth="60dp" />
+
+            <TextView
+                android:id="@+id/textViewSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/size_mm"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextFrameSize"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/background_for_edit_text"
+                android:backgroundTint="#41787878"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3"
+                android:minWidth="60dp" />
+
+        </LinearLayout>
 
 <!--————————————————————————————————————————— Note ——————————————————————————————————————————————-->
-        <EditText
-            android:id="@+id/editTextFrameSize"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_for_edit_text"
-            android:backgroundTint="#17000000"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="3"
-            android:minWidth="60dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewSize"
-            app:layout_constraintStart_toEndOf="@+id/textViewSize"
-            app:layout_constraintTop_toTopOf="@+id/textViewSize" />
-
-        <TextView
-            android:id="@+id/textViewSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Size(mm):"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextFramesInstallOf"
-            app:layout_constraintStart_toEndOf="@+id/editTextFramesInstallOf"
-            app:layout_constraintTop_toTopOf="@+id/editTextFramesInstallOf" />
 
         <TextView
             android:id="@+id/noteTextView"
@@ -194,7 +178,7 @@
             android:background="@drawable/frame_for_note"
             android:gravity="top"
             android:inputType="textMultiLine|text"
-            android:minHeight="306dp"
+            android:minHeight="310dp"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
