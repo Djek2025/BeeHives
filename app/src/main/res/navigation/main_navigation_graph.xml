@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/hivesFragment">
+
+    <fragment
+        android:id="@+id/hivesFragment"
+        android:name="com.example.beehives.view.fragments.HivesFragment"
+        android:label="fragment_hives"
+        tools:layout="@layout/fragment_hives" >
+        <action
+            android:id="@+id/action_hivesFragment_to_aboutHiveFragment"
+            app:destination="@id/aboutHiveFragment" />
+        <action
+            android:id="@+id/action_hivesFragment_to_aboutApiaryFragment"
+            app:destination="@id/aboutApiaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutHiveFragment"
+        android:name="com.example.beehives.view.fragments.AboutHiveFragment"
+        android:label="fragment_about_hive"
+        tools:layout="@layout/fragment_about_hive" >
+        <action
+            android:id="@+id/action_aboutHiveFragment_to_addRevisionFragment"
+            app:destination="@id/addRevisionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRevisionFragment"
+        android:name="com.example.beehives.view.fragments.AddRevisionFragment"
+        android:label="fragment_add_revision"
+        tools:layout="@layout/fragment_add_revision" />
+    <fragment
+        android:id="@+id/aboutApiaryFragment"
+        android:name="com.example.beehives.view.fragments.AboutApiaryFragment"
+        android:label="fragment_about_apiary"
+        tools:layout="@layout/fragment_about_apiary" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.beehives.view.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.beehives.view.fragments.MapsFragment"
+        android:label="MapsFragment" />
+    <action android:id="@+id/action_global_hivesFragment" app:destination="@id/hivesFragment" />
+    <action android:id="@+id/action_global_settingsFragment" app:destination="@id/settingsFragment" /><action android:id="@+id/action_global_mapsFragment" app:destination="@id/mapsFragment"/>
+</navigation>

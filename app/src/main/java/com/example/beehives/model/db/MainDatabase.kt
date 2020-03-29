@@ -6,13 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.beehives.model.db.dao.GeneralDao
 import com.example.beehives.model.db.entities.Apiary
+import com.example.beehives.model.db.entities.BeeQueen
 import com.example.beehives.model.db.entities.Hive
 import com.example.beehives.model.db.entities.Revision
 
 @Database(
     entities = [Apiary::class,
                 Hive::class,
-                Revision::class], version = 1, exportSchema = false)
+                Revision::class,
+                BeeQueen::class], version = 1, exportSchema = false)
 
 abstract class MainDatabase : RoomDatabase() {
 

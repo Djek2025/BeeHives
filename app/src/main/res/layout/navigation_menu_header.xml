@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="@string/hives_count"
         android:textColor="@android:color/secondary_text_light"
         app:layout_constraintStart_toStartOf="@+id/header_apiary_name"
         app:layout_constraintTop_toBottomOf="@+id/header_apiary_name" />

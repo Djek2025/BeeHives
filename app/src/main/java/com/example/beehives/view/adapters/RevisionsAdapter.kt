@@ -1,16 +1,20 @@
 package com.example.beehives.view.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Revision
+import com.example.beehives.utils.TimeConverter
+import com.example.beehives.view.activities.SEPARATOR
 import kotlinx.android.synthetic.main.item_for_revisions_recycler.view.*
 
-class RevisionsAdapter (private val inputItems : List<Revision>, val callback : Callback)
+class RevisionsAdapter (private val inputItems : List<Revision>, context: Context, val callback : Callback)
     : RecyclerView.Adapter<RevisionsAdapter.MainHolder>() {
 
+    private val time = TimeConverter()
 
     interface Callback {
         fun onItemClicked(item : Revision)
@@ -29,9 +33,8 @@ class RevisionsAdapter (private val inputItems : List<Revision>, val callback : 
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-//        holder.onBind(inputItems[position])
 
-        if (holder.adapterPosition == 0) {
+        if (position == 0) {
             holder.itemView.apply {
                 setHeaderBackground(date)
                 setHeaderBackground(frames)
@@ -39,7 +42,9 @@ class RevisionsAdapter (private val inputItems : List<Revision>, val callback : 
                 setHeaderBackground(note)
             }
         } else {
-            val revision = inputItems[holder.adapterPosition - 1]
+            //Revers adapter
+            val revision = inputItems[itemCount - (position + 1)]
+            val frm = revision.frames?.split(SEPARATOR)
 
             holder.itemView.apply {
                 setContentBackground(date)
@@ -47,10 +52,13 @@ class RevisionsAdapter (private val inputItems : List<Revision>, val callback : 
                 setContentBackground(strength)
                 setContentBackground(note)
 
-                date.text = revision.date.toString()
-                frames.text = revision.frames.toString()
-                strength.text = revision.strength.toString() + "%"
+                date.text = time.longToStringShort(revision.date!!)
+                frames.text = resources.getString(R.string.frames_rev_recycler, frm!![0],frm[1],frm[2])
+                strength.text = resources.getString(R.string.percents, revision.strength)
                 note.text = revision.note.toString()
+                holder.itemView.setOnClickListener {
+                    callback.onItemClicked(revision)
+                }
             }
         }
     }
@@ -68,5 +76,4 @@ class RevisionsAdapter (private val inputItems : List<Revision>, val callback : 
             }
         }
     }
-
 }

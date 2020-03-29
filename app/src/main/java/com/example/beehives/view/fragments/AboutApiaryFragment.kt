@@ -7,36 +7,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.beehives.R
 import com.example.beehives.view.activities.SEPARATOR
 import com.example.beehives.viewModel.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_about_apiary.*
 
-private const val ARG_CURRENT_APIARY = "Current Apiary"
-
 class AboutApiaryFragment : Fragment() {
 
-    private var currentApiaryId: Int? = null
     private lateinit var viewModel : BaseViewModel
+    private lateinit var navController : NavController
+
 
     companion object {
         @JvmStatic
-        fun newInstance(currentApiaryId: Int, vm : BaseViewModel) =
+        fun newInstance() =
             AboutApiaryFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_CURRENT_APIARY, currentApiaryId)
+
                 }
-                viewModel = vm
             }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance =true
+        viewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
         arguments?.let {
-            currentApiaryId = it.getInt(ARG_CURRENT_APIARY)
+
         }
     }
 
@@ -46,31 +49,26 @@ class AboutApiaryFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        navController = Navigation.findNavController(apiaryNameEditText)
 
-        viewModel.getApiaryByIdLd(currentApiaryId!!).observe(this@AboutApiaryFragment as LifecycleOwner, Observer {apiary ->
+        viewModel.getCurrentApiary().observe(this@AboutApiaryFragment as LifecycleOwner, Observer {apiary ->
 
             apiaryNameEditText.text = SpannableStringBuilder(apiary.name)
 
             when(apiary.location){
-                null,"" -> {
-                    locationImageView.setBackgroundResource(R.drawable.baseline_add_location_24)
+                null, "", SEPARATOR -> {
+                    locationImageView.setImageResource(R.drawable.baseline_add_location_24)
                     locationImageView.setOnClickListener {
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.container, MapsFragment.newInstance(currentApiaryId!!, viewModel, "add"), "map")
-                            .addToBackStack(null)
-                            .commit()
+                        navController.navigate(R.id.mapsFragment, bundleOf("request" to "add"))
                     }
                 }
                 else -> {
                     val latLng = apiary.location!!.split(SEPARATOR)
                     lat.text = getString(R.string.latitude, latLng[0])
                     lng.text = getString(R.string.longitude, latLng[1])
-                    locationImageView.setBackgroundResource(R.drawable.baseline_edit_location_24)
+                    locationImageView.setImageResource(R.drawable.baseline_edit_location_24)
                     locationImageView.setOnClickListener {
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.container, MapsFragment.newInstance(currentApiaryId!!, viewModel, "edit"), "map")
-                            .addToBackStack(null)
-                            .commit()
+                        navController.navigate(R.id.mapsFragment, bundleOf("request" to "edit"))
                     }
                 }
             }
@@ -82,6 +80,5 @@ class AboutApiaryFragment : Fragment() {
                 }else Toast.makeText(context, "Error: Name is empty", Toast.LENGTH_SHORT).show()
             }
         })
-
     }
 }

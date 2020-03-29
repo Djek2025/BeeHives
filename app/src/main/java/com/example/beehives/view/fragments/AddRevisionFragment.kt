@@ -9,32 +9,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.SeekBar
+import androidx.lifecycle.ViewModelProvider
 import com.example.beehives.R
 import com.example.beehives.utils.TimeConverter
 import com.example.beehives.model.db.entities.Revision
+import com.example.beehives.view.activities.SEPARATOR
 import com.example.beehives.viewModel.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_add_revision.*
 
-private const val ARG_HIVE_ID = "curent_hive_id"
+private const val ARG_HIVE_ID = "current_hive_id"
 
 class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePickerDialog.OnDateSetListener {
+
     private var hiveId: Int? = null
     private lateinit var viewModel : BaseViewModel
 
     companion object {
         @JvmStatic
-        fun newInstance(hiveId: Int,  vModel : BaseViewModel) =
+        fun newInstance() =
             AddRevisionFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_HIVE_ID, hiveId)
+
                 }
-                viewModel = vModel
             }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        viewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
         arguments?.let {
             hiveId = it.getInt(ARG_HIVE_ID)
         }
@@ -58,7 +61,7 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
                 hiveId = hiveId,
                 date = date,
                 strength = seekBar.progress,
-                frames = "8/12 145mm",
+                frames = getFramesStr(),
                 note = noteEditText.text.toString())
             )
             activity?.onBackPressed()
@@ -70,6 +73,12 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
 //                calendar.get(Calendar.MONTH),
 //                calendar.get(Calendar.DAY_OF_MONTH)).show()
 //        }
+    }
+
+    fun getFramesStr(): String{
+        return editTextFramesInstall.text.toString() + SEPARATOR +
+                editTextFramesInstallOf.text.toString() + SEPARATOR +
+                editTextFrameSize.text.toString()
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {

@@ -11,22 +11,33 @@ class MainRepository(private val dao: GeneralDao) {
 
     fun getApiaryByIdLd(id: Int) = dao.getApiaryByIdLd(id)
 
+    fun getHiveByIdLd(id: Int) = dao.getHiveByIdLd(id)
+
     fun getHiveRevisions(hiveId: Int) = dao.getHiveRevisions(hiveId)
 
     suspend fun getApiaryById(id: Int) =  dao.getApiaryById(id)
 
     suspend fun getHiveById(id: Int) = dao.getHiveById(id)
 
-    suspend fun insertHive(hive: Hive) {
-        dao.insertHive(hive)
+    suspend fun updateApiaryLocationById(id:Int, location : String) {
+        dao.updateApiaryLocationById(id, location)
     }
 
+//——————————————————————————————————————————————————————————————————————————————————————————————————
     suspend fun insertApiary(apiary: Apiary) {
         dao.insertApiary(apiary)
     }
 
     suspend fun updateApiary(apiary: Apiary) {
         dao.updateApiary(apiary)
+    }
+
+    suspend fun deleteApiary(apiary: Apiary){
+        dao.deleteApiary(apiary)
+    }
+
+    suspend fun insertHive(hive: Hive) {
+        dao.insertHive(hive)
     }
 
     suspend fun updateHive(hive: Hive) {
@@ -47,9 +58,5 @@ class MainRepository(private val dao: GeneralDao) {
 
     suspend fun deleteRevision(revision: Revision) {
         dao.updateRevision(revision)
-    }
-
-    suspend fun updateApiaryLocationById(id:Int, location : String) {
-        dao.updateApiaryLocationById(id, location)
     }
 }

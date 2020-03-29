@@ -38,51 +38,58 @@
             app:layout_constraintTop_toBottomOf="@+id/revisionTextView" />
 
 <!--————————————————————————————————————————— Strength ——————————————————————————————————————————-->
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:indeterminate="false"
-            android:progress="60"
-            app:layout_constraintEnd_toStartOf="@+id/percents"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/strengthTextView" />
 
         <TextView
             android:id="@+id/strengthTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_margin="8dp"
             android:text="@string/strength"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectDate" />
 
-        <TextView
-            android:id="@+id/percents"
-            android:layout_width="40dp"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="60%"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/seekBar"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/seekBar"
-            app:layout_constraintTop_toTopOf="@+id/seekBar" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/strengthTextView">
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="85"
+                android:indeterminate="false"
+                android:progress="60" />
+
+            <TextView
+                android:id="@+id/percents"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="15"
+                android:gravity="center|start"
+                android:text="60%"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
 <!--————————————————————————————————————————— Frames installed editText —————————————————————————-->
         <TextView
             android:id="@+id/framesInstalledTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/frames_installed"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
         <Button
             android:id="@+id/buttonAddFrameField"
@@ -100,6 +107,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_margin="8dp"
             android:background="@drawable/button_circle"
             android:gravity="center"
             android:orientation="horizontal"

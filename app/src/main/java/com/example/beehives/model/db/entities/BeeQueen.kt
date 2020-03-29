@@ -2,13 +2,13 @@ package com.example.beehives.model.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.beehives.view.activities.SEPARATOR
 
 @Entity
-data class Apiary(
+data class BeeQueen (
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    var name: String? = "Apiary",
-    var location: String? = SEPARATOR,
-    val todoList: String? = null
+    val hiveId: Int? = null,
+    val year: Int? = null,
+    val description: String? = null,
+    val note: String? = null
 )

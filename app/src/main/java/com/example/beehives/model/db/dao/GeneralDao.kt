@@ -10,6 +10,9 @@ interface GeneralDao {
     @Query("SELECT * FROM Apiary WHERE id = :id")
     fun getApiaryByIdLd(id: Int): LiveData<Apiary>
 
+    @Query("SELECT * FROM Hive WHERE id = :id")
+    fun getHiveByIdLd(id: Int): LiveData<Hive>
+
     @Query("SELECT * FROM Apiary")
     fun getAllApiaries(): LiveData<List<Apiary>>
 

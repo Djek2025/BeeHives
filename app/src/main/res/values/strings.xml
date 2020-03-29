@@ -19,14 +19,19 @@
     <string name="date">Date</string>
     <string name="frames">Frames</string>
     <string name="note">Note</string>
-    <string name="latitude">Latitude: %1$s° N</string>
-    <string name="longitude">Longitude: %1$s° E</string>
+    <string name="latitude">Latitude: %s° N</string>
+    <string name="longitude">Longitude: %s° E</string>
 
     <string name="new_revision">New Revision</string>
     <string name="bee_queen">Bee Queen</string>
     <string name="name">Name</string>
     <string name="add_label">Add Label</string>
-    <string name="hives_count">Hives count:</string>
+    <string name="hives_count">Hives count: %d</string>
     <string name="of">of</string>
     <string name="size_mm">Size(mm):</string>
+    <string name="str">Str</string>
+
+    <string name="frames_rev_recycler">%s of %s Size: %smm</string>
+
+    <string name="percents">%d%%</string>
 </resources>

@@ -4,12 +4,11 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_hives"
-            android:checked="true"
+            android:id="@+id/hivesFragment"
             android:icon="@drawable/round_storage_24"
             android:title="@string/hives" />
         <item
-            android:id="@+id/navigation_map"
+            android:id="@+id/mapsFragment"
             android:icon="@drawable/baseline_place_24"
             android:title="@string/map" />
         <item
@@ -30,7 +29,7 @@
         android:id="@+id/group_divider"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_settings"
+            android:id="@+id/settingsFragment"
             android:icon="@drawable/baseline_settings_24"
             android:title="@string/settings" />
 

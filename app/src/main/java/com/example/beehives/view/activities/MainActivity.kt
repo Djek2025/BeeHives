@@ -1,110 +1,67 @@
 package com.example.beehives.view.activities
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
-import com.example.beehives.view.fragments.AboutApiaryFragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.example.beehives.R
-import com.example.beehives.model.db.entities.Apiary
-import com.example.beehives.view.fragments.HivesFragment
-import com.example.beehives.view.fragments.MapsFragment
-import com.example.beehives.view.fragments.SettingsFragment
+import com.example.beehives.databinding.ActivityMainBinding
 import com.example.beehives.viewModel.BaseViewModel
-import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_menu_header.view.*
 
-private const val ARG_FIRST_RUN = "first_run"
-private const val ARG_CURRENT_APIARY = "current_apiary"
 const val SEPARATOR = "•—•"
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var drawer : DrawerLayout
-    private lateinit var settings : SharedPreferences
     private lateinit var viewModel : BaseViewModel
-    private var currentApiaryId : Int = 1
+    private lateinit var navController : NavController
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//        val finalHost = NavHostFragment.create(R.navigation.main_navigation_graph, bundleOf("current_apiary_id" to currentApiaryId))
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.nav_host_fragment, finalHost)
+//            .setPrimaryNavigationFragment(finalHost) // equivalent to app:defaultNavHost="true"
+//            .commit()
 
         viewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
-        settings = PreferenceManager.getDefaultSharedPreferences(this)
-        drawer = findViewById(R.id.drawer)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
-        if(settings.getBoolean(ARG_FIRST_RUN, true)){
-            viewModel.insertApiary(Apiary(name = "My first apiary"))
-            settings.edit().putBoolean(ARG_FIRST_RUN, false).apply()
-        }else {
-            currentApiaryId = settings.getInt(ARG_CURRENT_APIARY, 1)
+        NavigationUI.setupWithNavController(binding.navigationView, navController)
+
+        binding.navigationMenuButton.setOnClickListener{
+            binding.drawer.openDrawer(GravityCompat.START)
         }
 
-        navigation_view.setNavigationItemSelectedListener(this)
-        navigation_menu_button.setOnClickListener{
-            drawer.openDrawer(GravityCompat.START)
-        }
-        navigation_view.getHeaderView(0).setOnClickListener{
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, AboutApiaryFragment.newInstance(currentApiaryId, viewModel), "AboutApiary")
-                .addToBackStack(null)
-                .commit()
+        binding.navigationView.getHeaderView(0).setOnClickListener{
+            navController.navigate(R.id.aboutApiaryFragment)
             onBackPressed()
         }
-        viewModel.getApiaryByIdLd(currentApiaryId).observe(this, Observer { apiary ->
-            if (apiary.name != null) {
-                navigation_view.getHeaderView(0).header_apiary_name.text = apiary.name
-            }
-        })
 
-        if (HivesFragment.INSTANCE == null){
-            supportFragmentManager.beginTransaction()
-                .add(R.id.container, HivesFragment.newInstance(viewModel, currentApiaryId), "Hives")
-                .commit()
+        binding.navigationView.getHeaderView(0).let {
+            viewModel.getCurrentApiary().observe(this, Observer { apiary ->
+                it.header_apiary_name.text = apiary.name
+            })
         }
+        binding.navigationView.getHeaderView(0).let {
+            viewModel.getCurrentApiaryHives().observe(this, Observer { hives ->
+                it.header_hives_count.text = getString(R.string.hives_count, hives.size)
+            })
+        }
+
+//        navController.navigate(R.id.hivesFragment, bundleOf("current_apiary_id" to currentApiaryId))
     }
 
     override fun onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START)
+        if(binding.drawer.isDrawerOpen(GravityCompat.START)){
+            binding.drawer.closeDrawer(GravityCompat.START)
         } else super.onBackPressed()
     }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val transaction = supportFragmentManager.beginTransaction()
-        when(item.itemId){
-            R.id.navigation_hives -> transaction.replace(R.id.container, HivesFragment.newInstance(viewModel, currentApiaryId))
-            R.id.navigation_map -> transaction.setCustomAnimations(R.animator.card_flip_right_enter,
-                    R.animator.card_flip_right_exit,
-                    R.animator.card_flip_left_enter,
-                    R.animator.card_flip_left_exit)
-                .replace(R.id.container, MapsFragment.newInstance(currentApiaryId, viewModel, "show"))
-                .addToBackStack("map")
-            R.id.navigation_graphs -> true
-            R.id.navigation_todo_list -> true
-            R.id.navigation_scanner -> scanCode()
-            R.id.navigation_settings -> transaction.setCustomAnimations(R.animator.card_flip_right_enter,
-                    R.animator.card_flip_right_exit,
-                    R.animator.card_flip_left_enter,
-                    R.animator.card_flip_left_exit)
-                .replace(R.id.container, SettingsFragment())
-                .addToBackStack("settings")
-            R.id.navigation_share -> true
-            R.id.navigation_about -> true
-        }
-        drawer.closeDrawer(GravityCompat.START)
-        transaction.commit()
-        return true
-    }
-
-    fun scanCode (){
-
-    }
-
 }
