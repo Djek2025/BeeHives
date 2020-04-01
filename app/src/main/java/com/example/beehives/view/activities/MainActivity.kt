@@ -14,6 +14,7 @@ import com.example.beehives.viewModel.BaseViewModel
 import kotlinx.android.synthetic.main.navigation_menu_header.view.*
 
 const val SEPARATOR = "•—•"
+const val DEFAULT_PHOTO_HIVE = "android.resource://com.example.beehives/drawable/hive"
 
 class MainActivity : AppCompatActivity() {
 

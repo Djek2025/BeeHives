@@ -2,6 +2,7 @@ package com.example.beehives.model.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.beehives.view.activities.DEFAULT_PHOTO_HIVE
 
 @Entity
 data class Hive(
@@ -12,6 +13,6 @@ data class Hive(
     val breed: String? = "Golden Italian",
     val beeQueenId: Int? = null,
     val label: String? = null,
-    val photo: String? = null,
+    var photo: String? = DEFAULT_PHOTO_HIVE,
     val todoList: String? = null
 )
