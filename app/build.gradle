@@ -33,7 +33,7 @@ android {
         }
     }
 
-    viewBinding{
+    viewBinding {
         enabled = true
     }
 
@@ -80,8 +80,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.4.1'
 
     //Navigation
-    implementation"androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation"androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
