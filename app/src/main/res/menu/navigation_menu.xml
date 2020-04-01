@@ -20,7 +20,7 @@
             android:icon="@drawable/round_format_list_numbered_24"
             android:title="@string/todo_list"/>
         <item
-            android:id="@+id/navigation_scanner"
+            android:id="@+id/scanFragment"
             android:icon="@drawable/round_local_offer_24"
             android:title="@string/scan_label"/>
     </group>

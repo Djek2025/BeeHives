@@ -28,6 +28,12 @@ interface GeneralDao {
     @Query("SELECT * FROM Revision WHERE hiveId = :hiveId")
     fun getHiveRevisions(hiveId: Int): LiveData<List<Revision>>
 
+    @Query("SELECT id FROM Hive WHERE label = :label")
+    suspend fun getHiveIdByLabel(label: String): Int
+
+    @Query("UPDATE Hive SET label = :label WHERE id = :id")
+    suspend fun setLabelByHiveId(id: Int, label: String)
+
     //———————————————————————————————————————————
 
     @Insert

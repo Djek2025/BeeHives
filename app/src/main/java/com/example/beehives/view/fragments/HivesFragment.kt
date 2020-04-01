@@ -24,7 +24,6 @@ class HivesFragment : Fragment() {
     private lateinit var viewModel : BaseViewModel
     private lateinit var navController : NavController
 
-
 //    companion object {
 //        @JvmStatic
 //        fun newInstance(): HivesFragment =

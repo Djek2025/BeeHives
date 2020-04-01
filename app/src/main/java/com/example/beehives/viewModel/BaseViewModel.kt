@@ -68,6 +68,11 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         repository.updateApiaryLocationById(currentApiaryId, latitude + SEPARATOR + longitude)
     }
 
+    fun getHiveIdByLabel(label: String) = viewModelScope.async{ repository.getHiveIdByLabel(label) }
+
+    fun setLabelByHiveId(id: Int, label: String) = viewModelScope.launch { repository.setLabelByHiveId(id, label)}
+
+
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
     fun insertHive(hive: Hive) = viewModelScope.launch {

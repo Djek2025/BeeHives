@@ -19,6 +19,10 @@ class MainRepository(private val dao: GeneralDao) {
 
     suspend fun getHiveById(id: Int) = dao.getHiveById(id)
 
+    suspend fun getHiveIdByLabel(label: String) = dao.getHiveIdByLabel(label)
+
+    suspend fun setLabelByHiveId(id: Int, label: String) = dao.setLabelByHiveId(id, label)
+
     suspend fun updateApiaryLocationById(id:Int, location : String) {
         dao.updateApiaryLocationById(id, location)
     }

@@ -86,6 +86,9 @@ class AboutHiveFragment : Fragment() {
         add_revision_btn.setOnClickListener {
             navController.navigate(R.id.addRevisionFragment, bundleOf("current_hive_id" to hiveId))
         }
+        addLabelButton.setOnClickListener {
+            navController.navigate(R.id.scanFragment, bundleOf("request" to "write", "caller_id" to hiveId))
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
