@@ -114,13 +114,13 @@ class ScanFragment : Fragment(){
 
     private fun proccesImage(visionImageFromFrame: FirebaseVisionImage){
         detector.detectInImage(visionImageFromFrame)
-            .addOnFailureListener{ e -> Toast.makeText(context, "Exception", Toast.LENGTH_LONG).show()}
+            .addOnFailureListener{ e -> Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()}
             .addOnSuccessListener { firebaseVisionBarcodes ->
                 processResult(firebaseVisionBarcodes)
             }
     }
 
-    var counter = 0
+    private var counter = 0
     private fun processResult(firebaseVisionBarcodes: List<FirebaseVisionBarcode>) {
         if (firebaseVisionBarcodes.isNotEmpty() && counter == 0){
             counter++

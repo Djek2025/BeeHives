@@ -2,10 +2,12 @@ package com.example.beehives.viewModel
 
 import android.app.Application
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import com.example.beehives.model.db.MainDatabase
 import com.example.beehives.model.db.entities.Apiary
@@ -13,6 +15,7 @@ import com.example.beehives.model.db.entities.Hive
 import com.example.beehives.model.db.entities.Revision
 import com.example.beehives.model.repositories.MainRepository
 import com.example.beehives.view.activities.SEPARATOR
+import com.example.beehives.view.fragments.SettingsFragment
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -71,8 +74,12 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     fun getHiveIdByLabel(label: String) = viewModelScope.async{ repository.getHiveIdByLabel(label) }
 
     fun setLabelByHiveId(id: Int, label: String) = viewModelScope.launch { repository.setLabelByHiveId(id, label)}
+    fun setPhotoByHiveId(id: Int, photo: String) = viewModelScope.launch { repository.setPhotoByHiveId(id, photo)}
 
-
+    fun deleteHiveAndRevisions(hiveId: Int) = viewModelScope.launch {
+        repository.deleteHiveById(hiveId)
+        repository.deleteRevisionsByHiveId(hiveId)
+    }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
     fun insertHive(hive: Hive) = viewModelScope.launch {

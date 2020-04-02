@@ -6,20 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Hive
 import com.example.beehives.model.db.entities.Revision
+import com.example.beehives.view.activities.DEFAULT_PHOTO_HIVE
 import com.example.beehives.view.adapters.RevisionsAdapter
 import com.example.beehives.viewModel.BaseViewModel
-import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_about_hive.*
 
@@ -65,11 +64,8 @@ class AboutHiveFragment : Fragment() {
                 .load(it.photo)
                 .into(imageView)
             name.text = it.name
-            breed.text = it.photo
-            buttonAddPhoto.setOnClickListener { view ->
-                hive = it
-                startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), ARG_PHOTO_REQUEST)
-            }
+            breed.text = it.breed
+            hive = it
         })
 
         viewModel.getHiveRevisions(hiveId!!).observe(this as LifecycleOwner, Observer {
@@ -89,12 +85,41 @@ class AboutHiveFragment : Fragment() {
         addLabelButton.setOnClickListener {
             navController.navigate(R.id.scanFragment, bundleOf("request" to "write", "caller_id" to hiveId))
         }
+
+        buttonAddPhoto.setOnClickListener {
+            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), ARG_PHOTO_REQUEST)
+        }
+
+        val popupMenu = PopupMenu(context, popUpBtn)
+        popupMenu.inflate(R.menu.popup_menu)
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.changeNameBreed -> {
+
+                    true
+                }
+                R.id.setDefaultImage -> {
+                    viewModel.setPhotoByHiveId(hiveId!!, DEFAULT_PHOTO_HIVE)
+                    true
+                }
+                R.id.deleteHive -> {
+                    navController.popBackStack()
+                    viewModel.deleteHiveAndRevisions(hiveId!!)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popUpBtn.setOnClickListener{
+            popupMenu.show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (ARG_PHOTO_REQUEST == requestCode){
-            viewModel.updateHive(hive.apply { photo = data?.data.toString() })
+        if (ARG_PHOTO_REQUEST == requestCode && data != null){
+            viewModel.updateHive(hive.apply { photo = data.data.toString() })
         }
     }
 }

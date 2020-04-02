@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/changeNameBreed"
+        android:title="Change name/breed" />
+    <item
+        android:id="@+id/setDefaultImage"
+        android:title="Set defaul image" />
+    <item
+        android:id="@+id/deleteHive"
+        android:title="Delete this hive" />
+</menu>

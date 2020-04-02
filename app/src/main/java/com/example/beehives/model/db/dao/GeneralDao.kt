@@ -34,6 +34,14 @@ interface GeneralDao {
     @Query("UPDATE Hive SET label = :label WHERE id = :id")
     suspend fun setLabelByHiveId(id: Int, label: String)
 
+    @Query("UPDATE Hive SET photo = :photo WHERE id = :id")
+    suspend fun setPhotoByHiveId(id: Int, photo: String)
+
+    @Query("DELETE FROM Hive WHERE id = :hiveId")
+    suspend fun deleteHiveById(hiveId: Int)
+
+    @Query("DELETE FROM Revision WHERE hiveId = :hiveId")
+    suspend fun deleteRevisionsByHiveId(hiveId: Int)
     //———————————————————————————————————————————
 
     @Insert
