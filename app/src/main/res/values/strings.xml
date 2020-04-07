@@ -26,6 +26,7 @@
     <string name="bee_queen">Bee Queen</string>
     <string name="name">Name</string>
     <string name="add_label">Add Label</string>
+    <string name="replace_label">Replace Label</string>
     <string name="hives_count">Hives count: %d</string>
     <string name="of">of</string>
     <string name="size_mm">Size(mm):</string>

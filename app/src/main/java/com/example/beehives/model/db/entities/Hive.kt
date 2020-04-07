@@ -13,6 +13,5 @@ data class Hive(
     val breed: String? = "Golden Italian",
     val beeQueenId: Int? = null,
     val label: String? = null,
-    var photo: String? = DEFAULT_PHOTO_HIVE,
-    val todoList: String? = null
+    var photo: String? = DEFAULT_PHOTO_HIVE
 )

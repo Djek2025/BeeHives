@@ -5,20 +5,18 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.beehives.model.db.dao.GeneralDao
-import com.example.beehives.model.db.entities.Apiary
-import com.example.beehives.model.db.entities.BeeQueen
-import com.example.beehives.model.db.entities.Hive
-import com.example.beehives.model.db.entities.Revision
+import com.example.beehives.model.db.entities.*
 
 @Database(
     entities = [Apiary::class,
                 Hive::class,
                 Revision::class,
-                BeeQueen::class], version = 1, exportSchema = false)
+                BeeQueen::class,
+                Todo::class], version = 1, exportSchema = false)
 
 abstract class MainDatabase : RoomDatabase() {
 
-    abstract fun hiveDao(): GeneralDao
+    abstract fun generalDao(): GeneralDao
 
     companion object {
         @Volatile

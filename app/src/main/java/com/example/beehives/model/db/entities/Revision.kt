@@ -9,7 +9,7 @@ data class Revision(
     val id: Int? = null,
     val hiveId: Int? = null,
     val date: Long? = 1583020800L,
-    val strength: Int? = null,
+    val strength: Int? = 60,
     val frames: String? = null,
     val note: String? = null
 )

@@ -6,26 +6,34 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Hive
-import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_for_hives_recycler.view.*
 
-class HivesAdapter(private val inputItems : List<Hive>, val callback : Callback) : RecyclerView.Adapter<HivesAdapter.MainHolder>() {
+class HivesAdapter(val callback : Callback) : RecyclerView.Adapter<HivesAdapter.MainHolder>() {
+
+    private var hives = mutableListOf<Hive>()
+
+    fun setHives(list: List<Hive>){
+        hives.clear()
+        hives.addAll(list)
+        notifyDataSetChanged()
+    }
 
     interface Callback {
-        fun onItemClicked(item : Hive)
+        fun onItemClick(item : Hive)
+        fun onItemLongClick(item: Hive)
     }
 
     override fun getItemCount(): Int {
-        return  inputItems.size + 1
+        return  hives.size + 1
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
 
         if (holder.adapterPosition == 0){
-            holder.itemView.photo.visibility = View.GONE
+//            holder.itemView.photo.visibility = View.GONE
         }else{
-            holder.onBind(inputItems[position - 1])
+            holder.onBind(hives[position - 1])
         }
     }
 
@@ -42,7 +50,11 @@ class HivesAdapter(private val inputItems : List<Hive>, val callback : Callback)
             itemView.titel.text = item.name.toString()
             itemView.description.text = item.breed.toString()
             itemView.setOnClickListener {
-                callback.onItemClicked(item)
+                callback.onItemClick(item)
+            }
+            itemView.setOnLongClickListener {
+                callback.onItemLongClick(item)
+                true
             }
         }
     }

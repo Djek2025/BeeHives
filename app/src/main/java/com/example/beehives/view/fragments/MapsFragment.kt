@@ -25,22 +25,11 @@ private const val ARG_REQUEST = "request"
 
 class MapsFragment : Fragment() {
 
-    private var request : String? = null
+    private var request : String? = "show"
     private lateinit var viewModel : MapsViewModel
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            MapsFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
         viewModel = ViewModelProvider(this).get(MapsViewModel::class.java)
         arguments?.let {
             request = it.getString( ARG_REQUEST,"show")

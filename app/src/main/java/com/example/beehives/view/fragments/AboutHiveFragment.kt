@@ -8,82 +8,64 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.os.bundleOf
-import androidx.lifecycle.LifecycleOwner
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.beehives.R
-import com.example.beehives.model.db.entities.Hive
+import com.example.beehives.databinding.FragmentAboutHiveBinding
 import com.example.beehives.model.db.entities.Revision
 import com.example.beehives.view.activities.DEFAULT_PHOTO_HIVE
 import com.example.beehives.view.adapters.RevisionsAdapter
-import com.example.beehives.viewModel.BaseViewModel
-import com.squareup.picasso.Picasso
+import com.example.beehives.viewModel.AboutHiveViewModel
+import com.example.beehives.viewModel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_about_hive.*
+import kotlinx.coroutines.*
 
-private const val ARG_ID_KEY = "hive_id"
 private const val ARG_PHOTO_REQUEST = 33
 
-class AboutHiveFragment : Fragment() {
+class AboutHiveFragment : Fragment(), RevisionsAdapter.Callback {
 
-    private var hiveId: Int? = null
-    private lateinit var viewModel: BaseViewModel
+    private lateinit var viewModelAbout: AboutHiveViewModel
+    private lateinit var sharedViewModel : SharedViewModel
     private lateinit var navController: NavController
-    private lateinit var hive: Hive
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            AboutHiveFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
+    private lateinit var binding: FragmentAboutHiveBinding
+    private val adapter by lazy { RevisionsAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
-        viewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
-        arguments?.let {
-            hiveId = it.getInt(ARG_ID_KEY)
-        }
+        sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
+        viewModelAbout = ViewModelProvider(this).get(AboutHiveViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_about_hive, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_about_hive, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModelAbout
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         navController = Navigation.findNavController(revisionsRecycler)
+        revisionsRecycler.adapter = adapter
 
-        viewModel.getHiveByIdLd(hiveId!!).observe(this as LifecycleOwner, Observer {
-            Picasso.get()
-                .load(it.photo)
-                .into(imageView)
-            name.text = it.name
-            breed.text = it.breed
-            hive = it
+
+        viewModelAbout.getHive(sharedViewModel.selectedHive).observe(viewLifecycleOwner, Observer {
+            viewModelAbout.hive.value = it
         })
 
-        viewModel.getHiveRevisions(hiveId!!).observe(this as LifecycleOwner, Observer {
-                it?.let {
-                    revisionsRecycler.adapter =
-                        RevisionsAdapter(it, context!!, object : RevisionsAdapter.Callback {
-                            override fun onItemClicked(item: Revision) {
-
-                            }
-                        })
-                }
+        viewModelAbout.getHiveRevisions(sharedViewModel.selectedHive).observe(viewLifecycleOwner, Observer {
+            adapter.setRevisions(it)
         })
 
         add_revision_btn.setOnClickListener {
-            navController.navigate(R.id.addRevisionFragment, bundleOf("current_hive_id" to hiveId))
+            navController.navigate(R.id.addRevisionFragment, bundleOf("current_hive_id" to sharedViewModel.selectedHive))
         }
         addLabelButton.setOnClickListener {
-            navController.navigate(R.id.scanFragment, bundleOf("request" to "write", "caller_id" to hiveId))
+            navController.navigate(R.id.scanFragment, bundleOf("request" to "write", "caller_id" to sharedViewModel.selectedHive))
         }
 
         buttonAddPhoto.setOnClickListener {
@@ -99,12 +81,15 @@ class AboutHiveFragment : Fragment() {
                     true
                 }
                 R.id.setDefaultImage -> {
-                    viewModel.setPhotoByHiveId(hiveId!!, DEFAULT_PHOTO_HIVE)
+                    viewModelAbout.setPhoto(DEFAULT_PHOTO_HIVE)
                     true
                 }
                 R.id.deleteHive -> {
-                    navController.popBackStack()
-                    viewModel.deleteHiveAndRevisions(hiveId!!)
+                    CoroutineScope(Dispatchers.Main).launch{
+                        viewModelAbout.deleteCurrentHiveAndRevisions()
+                        delay(100)
+                        navController.popBackStack()
+                    }
                     true
                 }
                 else -> false
@@ -116,10 +101,18 @@ class AboutHiveFragment : Fragment() {
         }
     }
 
+    override fun onItemClick(item: Revision) {
+
+    }
+
+    override fun onItemLongClick(item: Revision) {
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (ARG_PHOTO_REQUEST == requestCode && data != null){
-            viewModel.updateHive(hive.apply { photo = data.data.toString() })
+            viewModelAbout.setPhoto(data.data.toString())
         }
     }
 }

@@ -13,13 +13,8 @@ import com.google.firebase.firestore.GeoPoint
 import kotlinx.coroutines.launch
 
 class MapsViewModel(application: Application) : BaseViewModel(application) {
-    private val database : CollectionReference
 
-    init {
-        database = FirebaseFirestore.getInstance().collection("Apiaries")
-    }
-
-
+    private val database : CollectionReference = FirebaseFirestore.getInstance().collection("Apiaries")
 
     fun insertLocation (latitude:Double, longitude:Double) {
         viewModelScope.launch{
@@ -42,7 +37,7 @@ class MapsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getAllLocations(gMap: GoogleMap) {
-        database.get().addOnSuccessListener {
+        database.get().addOnSuccessListener { it ->
             it.documents.forEach {
                 val temp = it.getGeoPoint("Coords")
                 val latlng = LatLng(temp!!.latitude, temp.longitude)

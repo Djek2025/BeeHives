@@ -1,6 +1,5 @@
 package com.example.beehives.view.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +10,24 @@ import com.example.beehives.utils.TimeConverter
 import com.example.beehives.view.activities.SEPARATOR
 import kotlinx.android.synthetic.main.item_for_revisions_recycler.view.*
 
-class RevisionsAdapter (private val inputItems : List<Revision>, context: Context, val callback : Callback)
+class RevisionsAdapter (val callback : Callback)
     : RecyclerView.Adapter<RevisionsAdapter.MainHolder>() {
 
     private val time = TimeConverter()
+    private var revisions = listOf<Revision>()
+
+    fun setRevisions(list: List<Revision>){
+        revisions = list
+        notifyDataSetChanged()
+    }
 
     interface Callback {
-        fun onItemClicked(item : Revision)
+        fun onItemClick(item : Revision)
+        fun onItemLongClick(item : Revision)
     }
 
     override fun getItemCount(): Int {
-        return  inputItems.size + 1
+        return revisions.size + 1
     }
 
     private fun setHeaderBackground(view: View) {
@@ -43,7 +49,7 @@ class RevisionsAdapter (private val inputItems : List<Revision>, context: Contex
             }
         } else {
             //Revers adapter
-            val revision = inputItems[itemCount - (position + 1)]
+            val revision = revisions[itemCount - (position + 1)]
             val frm = revision.frames?.split(SEPARATOR)
 
             holder.itemView.apply {
@@ -57,7 +63,7 @@ class RevisionsAdapter (private val inputItems : List<Revision>, context: Contex
                 strength.text = resources.getString(R.string.percents, revision.strength)
                 note.text = revision.note.toString()
                 holder.itemView.setOnClickListener {
-                    callback.onItemClicked(revision)
+                    callback.onItemClick(revision)
                 }
             }
         }
@@ -71,8 +77,12 @@ class RevisionsAdapter (private val inputItems : List<Revision>, context: Contex
     inner class MainHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun onBind(item: Revision){
+            itemView.setOnLongClickListener {
+                callback.onItemLongClick(item)
+                true
+            }
             itemView.setOnClickListener {
-                callback.onItemClicked(item)
+                callback.onItemClick(item)
             }
         }
     }

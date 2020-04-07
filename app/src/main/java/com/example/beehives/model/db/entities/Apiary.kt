@@ -9,6 +9,5 @@ data class Apiary(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     var name: String? = "Apiary",
-    var location: String? = SEPARATOR,
-    val todoList: String? = null
+    var location: String? = SEPARATOR
 )

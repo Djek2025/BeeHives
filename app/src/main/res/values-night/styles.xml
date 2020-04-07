@@ -6,15 +6,18 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
 
         <item name="android:colorBackground">@android:color/background_dark</item>
         <item name="android:windowBackground">@android:color/background_dark</item>
 
+
         <item name="navigationViewStyle">@style/styleNavView</item>
-<!--        <item name="buttonStyle">@style/styleButton</item>-->
         <item name="editTextStyle">@style/styleEditText</item>
         <item name="android:textViewStyle">@style/styleTextView</item>
         <item name="seekBarStyle">@style/styleSeekBar</item>
+        <!--        <item name="buttonStyle">@style/styleButton</item>-->
+
     </style>
 
     <style name="styleSeekBar" parent="Widget.AppCompat.SeekBar">

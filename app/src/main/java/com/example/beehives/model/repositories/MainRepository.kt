@@ -31,7 +31,10 @@ class MainRepository(private val dao: GeneralDao) {
     suspend fun deleteHiveById(hiveId: Int){ dao.deleteHiveById(hiveId)}
     suspend fun deleteRevisionsByHiveId(hiveId: Int){ dao.deleteRevisionsByHiveId(hiveId)}
 
-//——————————————————————————————————————————————————————————————————————————————————————————————————
+    suspend fun getLastRevisionByHiveId(id: Int) = dao.getLastRevisionByHiveId(id)
+
+
+    //——————————————————————————————————————————————————————————————————————————————————————————————————
     suspend fun insertApiary(apiary: Apiary) {
         dao.insertApiary(apiary)
     }

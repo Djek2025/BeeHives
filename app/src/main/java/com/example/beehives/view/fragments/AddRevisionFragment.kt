@@ -9,57 +9,58 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.SeekBar
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.example.beehives.R
+import com.example.beehives.databinding.FragmentAddRevisionBinding
 import com.example.beehives.utils.TimeConverter
 import com.example.beehives.model.db.entities.Revision
 import com.example.beehives.view.activities.SEPARATOR
 import com.example.beehives.viewModel.BaseViewModel
+import com.example.beehives.viewModel.RevisionViewModel
+import com.example.beehives.viewModel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_add_revision.*
-
-private const val ARG_HIVE_ID = "current_hive_id"
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePickerDialog.OnDateSetListener {
 
-    private var hiveId: Int? = null
-    private lateinit var viewModel : BaseViewModel
+    private lateinit var viewModel : RevisionViewModel
+    private lateinit var sharedViewModel : SharedViewModel
+    private lateinit var binding: FragmentAddRevisionBinding
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            AddRevisionFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
-        viewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
-        arguments?.let {
-            hiveId = it.getInt(ARG_HIVE_ID)
-        }
+        viewModel = ViewModelProvider(this).get(RevisionViewModel::class.java)
+        sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add_revision, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_revision, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
+        return binding.root
     }
 
-    private var date: Long? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         seekBar.setOnSeekBarChangeListener(this)
 
-        val timeConverter = TimeConverter()
-        date = timeConverter.getTimeLong()
-        selectDate.text = timeConverter.longToString(timeConverter.getTimeLong())
+        CoroutineScope(Dispatchers.IO).launch {
+            val lrev = viewModel.getLastRev(sharedViewModel.selectedHive).await()
+            withContext(Dispatchers.Main){
+                viewModel.lastRevision.value = lrev
+            }
+        }
 
         floatingActionButton2.setOnClickListener {
             viewModel.insertRevison(Revision(
-                hiveId = hiveId,
-                date = date,
+                hiveId = sharedViewModel.selectedHive,
+                date = viewModel.getDate(),
                 strength = seekBar.progress,
                 frames = getFramesStr(),
                 note = noteEditText.text.toString())

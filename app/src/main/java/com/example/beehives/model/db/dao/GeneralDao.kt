@@ -42,6 +42,9 @@ interface GeneralDao {
 
     @Query("DELETE FROM Revision WHERE hiveId = :hiveId")
     suspend fun deleteRevisionsByHiveId(hiveId: Int)
+
+    @Query("SELECT * FROM Revision WHERE hiveId = :id AND date = (SELECT max(date) From Revision WHERE hiveId = :id)")
+    suspend fun getLastRevisionByHiveId(id: Int): Revision
     //———————————————————————————————————————————
 
     @Insert

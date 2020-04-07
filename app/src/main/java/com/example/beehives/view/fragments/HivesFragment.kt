@@ -5,64 +5,65 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.beehives.R
+import com.example.beehives.databinding.FragmentHivesBinding
 import com.example.beehives.model.db.entities.Hive
 import com.example.beehives.view.adapters.HivesAdapter
-import com.example.beehives.viewModel.BaseViewModel
+import com.example.beehives.viewModel.HivesViewModel
+import com.example.beehives.viewModel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_hives.*
 
-private const val ARG_CURRENT_APIARY_ID = "current_apiary_id"
-
-class HivesFragment : Fragment() {
+class HivesFragment : Fragment(), HivesAdapter.Callback {
 
     private var apiaryId : Int = 1
-    private lateinit var viewModel : BaseViewModel
+    private lateinit var binding: FragmentHivesBinding
+    private lateinit var viewModel : HivesViewModel
+    private lateinit var sharedViewModel : SharedViewModel
     private lateinit var navController : NavController
-
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(): HivesFragment =
-//            HivesFragment().apply {
-//                arguments = Bundle().apply {
-//                    putInt(ARG_CURRENT_APIARY_ID, apiaryId)
-//                }
-//            }
-//    }
+    private val adapter by lazy { HivesAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
-        viewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
-        arguments?.let {
-            apiaryId = it.getInt(ARG_CURRENT_APIARY_ID)
-        }
+        viewModel = ViewModelProvider(this).get(HivesViewModel::class.java)
+        sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
+        apiaryId = sharedViewModel.currentApiary
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_hives, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hives, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         navController = Navigation.findNavController(hivesRecycler)
+        hivesRecycler.adapter = adapter
 
         viewModel.getCurrentApiaryHives().observe(viewLifecycleOwner, Observer {
             it?.let {
-                hivesRecycler.adapter = HivesAdapter(it, object : HivesAdapter.Callback {
-                    override fun onItemClicked(item: Hive) {
-                        navController.navigate(R.id.aboutHiveFragment, bundleOf("hive_id" to item.id ))
-                    }
-                })
+                adapter.setHives(it)
             }
         })
 
         floatingActionButton.setOnClickListener {
             viewModel.insertHive(Hive(apiaryId = apiaryId))
         }
+    }
+
+    override fun onItemClick(item: Hive) {
+        sharedViewModel.selectedHive = item.id!!
+        navController.navigate(R.id.aboutHiveFragment)
+    }
+
+    override fun onItemLongClick(item: Hive) {
+        viewModel.checked.value = !viewModel.checked.value!!
     }
 }
