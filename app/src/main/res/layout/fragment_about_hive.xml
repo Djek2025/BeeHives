@@ -37,9 +37,10 @@
                 android:id="@+id/buttonAddPhoto"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:padding="12dp"
                 android:background="@drawable/button"
                 android:drawableStart="@drawable/baseline_add_a_photo_24"
+                android:drawableTint="@color/common_google_signin_btn_text_light"
+                android:padding="12dp"
                 android:textColor="#fff"
                 app:layout_constraintBottom_toTopOf="@+id/name"
                 app:layout_constraintEnd_toEndOf="@+id/imageView" />

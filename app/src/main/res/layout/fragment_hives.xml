@@ -31,6 +31,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@{vm.checked ? @drawable/baseline_delete_forever_24:@drawable/baseline_add_24}"
+            android:tint="@color/common_google_signin_btn_text_light"
             app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
