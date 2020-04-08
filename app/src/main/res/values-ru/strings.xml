@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">BeeHives</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="share">Поделиться</string>
+    <string name="settings">Настройки</string>
+    <string name="graphs">Графики</string>
+    <string name="map">Карта</string>
+    <string name="hives">Ульи</string>
+    <string name="about">О программе</string>
+    <string name="todo_list">Список дел</string>
+    <string name="scan_label">Сканировать метку</string>
+
+    <string name="revision">Ревизия</string>
+    <string name="strength">Сила</string>
+    <string name="frames_installed">Установлено рамок:</string>
+
+    <string name="date">Дата</string>
+    <string name="frames">Рамки</string>
+    <string name="note">Заметка</string>
+    <string name="latitude">Широта: %s° N</string>
+    <string name="longitude">Долгота: %s° E</string>
+
+    <string name="new_revision">Добавить ревизию</string>
+    <string name="bee_queen">Матка</string>
+    <string name="name">Имя</string>
+    <string name="add_label">Добавить метку</string>
+    <string name="replace_label">Заменить метку</string>
+    <string name="hives_count">Количество ульев: %d</string>
+    <string name="of">из</string>
+    <string name="size_mm">Размер(мм):</string>
+    <string name="str">Сил</string>
+
+    <string name="frames_rev_recycler">%s из %s Размер: %sмм</string>
+    <string name="percents">%d%%</string>
+
+    <string name="units">Единицы измерения</string>
+    <string name="night_mode">Ночной режим</string>
+    <string name="language">Язык</string>
+    <string name="night_mode_disabled">Ночной режим отключен</string>
+    <string name="night_mode_enabled">Ночной режим включен</string>
+</resources>

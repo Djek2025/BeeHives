@@ -1,0 +1,13 @@
+<resources>
+
+    <string-array name="units_values">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
+
+    <string-array name="units_titles">
+        <item>Метрические</item>
+        <item>Имперские</item>
+    </string-array>
+
+</resources>

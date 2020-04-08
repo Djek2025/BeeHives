@@ -71,9 +71,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
             "language" -> {
                 when(sharedPreferences!!.getString("language", "en")){
-                    "en" ->{config.setLocale(Locale("en")); recreate()}
-                    "ua" ->{config.setLocale(Locale("ua")); recreate()}
-                    "ru" ->{config.setLocale(Locale("ru")); recreate()}
+                    "en" ->{}
+                    "ua" ->{}
+                    "ru" ->{}
                 }
             }
             "units" -> {}

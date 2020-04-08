@@ -33,6 +33,11 @@
     <string name="str">Str</string>
 
     <string name="frames_rev_recycler">%s of %s Size: %smm</string>
-
     <string name="percents">%d%%</string>
+
+    <string name="units">Units</string>
+    <string name="night_mode">Night mode</string>
+    <string name="language">Language</string>
+    <string name="night_mode_disabled">Night mode disabled</string>
+    <string name="night_mode_enabled">Night mode enabled</string>
 </resources>
