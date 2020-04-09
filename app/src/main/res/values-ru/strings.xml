@@ -40,4 +40,7 @@
     <string name="language">Язык</string>
     <string name="night_mode_disabled">Ночной режим отключен</string>
     <string name="night_mode_enabled">Ночной режим включен</string>
+    <string name="change_name_breed">Изменить имя/породу</string>
+    <string name="set_defaul_image">Сбросить изображение</string>
+    <string name="delete_this_hive">Удалить</string>
 </resources>

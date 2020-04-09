@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_hives.*
 
 class HivesFragment : Fragment(), HivesAdapter.Callback {
 
-    private var apiaryId : Int = 1
+    private var apiaryId : Int? = null
     private lateinit var binding: FragmentHivesBinding
     private lateinit var viewModel : HivesViewModel
     private lateinit var sharedViewModel : SharedViewModel
@@ -32,7 +32,7 @@ class HivesFragment : Fragment(), HivesAdapter.Callback {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(HivesViewModel::class.java)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
-        apiaryId = sharedViewModel.currentApiary
+        apiaryId = viewModel.getCurrentApiaryId()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,7 +47,7 @@ class HivesFragment : Fragment(), HivesAdapter.Callback {
         navController = Navigation.findNavController(hivesRecycler)
         hivesRecycler.adapter = adapter
 
-        viewModel.getCurrentApiaryHives().observe(viewLifecycleOwner, Observer {
+        viewModel.currentApiaryHives.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.setHives(it)
             }

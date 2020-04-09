@@ -5,4 +5,5 @@
     <color name="colorPrimaryDark">#FFAB00</color>
 
     <color name="colorBackground">@android:color/background_light</color>
+
 </resources>

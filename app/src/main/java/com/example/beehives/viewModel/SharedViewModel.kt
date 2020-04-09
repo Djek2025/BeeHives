@@ -8,4 +8,8 @@ class SharedViewModel: ViewModel() {
 
     var selectedHive = 1
 
+    var mapRequest: String? = "show"
+
+    var scanRequest: String? = "reed"
+
 }

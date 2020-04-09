@@ -40,4 +40,7 @@
     <string name="language">Language</string>
     <string name="night_mode_disabled">Night mode disabled</string>
     <string name="night_mode_enabled">Night mode enabled</string>
+    <string name="change_name_breed">Change name/breed</string>
+    <string name="set_defaul_image">Set defaul image</string>
+    <string name="delete_this_hive">Delete this hive</string>
 </resources>

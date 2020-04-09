@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/changeNameBreed"
-        android:title="Change name/breed" />
+        android:title="@string/change_name_breed" />
     <item
         android:id="@+id/setDefaultImage"
-        android:title="Set defaul image" />
+        android:title="@string/set_defaul_image" />
     <item
         android:id="@+id/deleteHive"
-        android:title="Delete this hive" />
+        android:title="@string/delete_this_hive" />
 </menu>

@@ -1,23 +1,21 @@
 package com.example.beehives.view.activities
 
 import android.content.SharedPreferences
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import androidx.preference.PreferenceManager
 import com.example.beehives.R
 import com.example.beehives.databinding.ActivityMainBinding
 import com.example.beehives.view.fragments.SettingsFragment
 import com.example.beehives.viewModel.BaseViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import kotlinx.android.synthetic.main.navigation_menu_header.view.*
+
 
 const val SEPARATOR = "•—•"
 const val DEFAULT_PHOTO_HIVE = "android.resource://com.example.beehives/drawable/hive"
@@ -39,15 +37,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(navView, navController)
 
-
-        binding.navigationMenuButton.setOnClickListener{
-            binding.drawer.openDrawer(GravityCompat.START)
-        }
-
-        navView.getHeaderView(0).setOnClickListener{
-            navController.navigate(R.id.aboutApiaryFragment)
-            onBackPressed()
-        }
+        initListeners()
 
     }
 
@@ -58,25 +48,22 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        val config = resources.configuration
-        when(key){
-            "night_mode" -> {
-                if(sharedPreferences!!.getBoolean("night_mode", false)){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    recreate()
-                }else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    recreate()
-                }
-            }
-            "language" -> {
-                when(sharedPreferences!!.getString("language", "en")){
-                    "en" ->{}
-                    "ua" ->{}
-                    "ru" ->{}
-                }
-            }
-            "units" -> {}
+        SettingsFragment().onSharedPreferenceChanged(sharedPreferences, key)
+    }
+
+    fun initListeners(){
+        navView.getHeaderView(0).setOnClickListener{
+            navController.navigate(R.id.aboutApiaryFragment)
+            onBackPressed()
+        }
+        viewModel.currentApiary.observeForever {
+            navView.getHeaderView(0).header_apiary_name.text = it.name
+        }
+        viewModel.currentApiaryHives.observeForever {
+            navView.getHeaderView(0).header_hives_count.text = getString(R.string.hives_count, it.size)
+        }
+        binding.navigationMenuButton.setOnClickListener{
+            binding.drawer.openDrawer(GravityCompat.START)
         }
     }
 }

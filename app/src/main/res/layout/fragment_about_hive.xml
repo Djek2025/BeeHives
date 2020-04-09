@@ -57,7 +57,7 @@
 
             <TextView
                 android:id="@+id/breed"
-                android:text="@{vm.hive.id.toString()}"
+                android:text="@{vm.hive.breed}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -3,7 +3,7 @@ package com.example.beehives.viewModel
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.example.beehives.model.db.MainDatabase
@@ -23,8 +23,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     private val repository: MainRepository
     private val settings : SharedPreferences
     private var currentApiaryId: Int
-    private var currentApiary: LiveData<Apiary>
-    private var currentApiaryHives: LiveData<List<Hive>>
+    val currentApiary: MutableLiveData<Apiary> by lazy { MutableLiveData<Apiary>() }
+    val currentApiaryHives: MutableLiveData<List<Hive>> by lazy { MutableLiveData<List<Hive>>() }
 
     init {
         val dao = MainDatabase.getDatabase(application).generalDao()
@@ -33,14 +33,18 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
 
         currentApiaryId = if (settings.getBoolean(ARG_FIRST_RUN, true)) {
             settings.edit().putBoolean(ARG_FIRST_RUN, false).apply()
-            insertApiary(Apiary())
+            insertApiary(Apiary(id = 1))
             1
         } else {
             settings.getInt(ARG_CURRENT_APIARY, 1)
         }
 
-        currentApiary = repository.getApiaryByIdLd(currentApiaryId)
-        currentApiaryHives = repository.getApiaryHives(currentApiaryId)
+        repository.getApiaryByIdLd(currentApiaryId).observeForever {
+            currentApiary.value = it
+        }
+        repository.getApiaryHives(currentApiaryId).observeForever {
+            currentApiaryHives.value = it
+        }
     }
 
     fun getRepo() = repository
@@ -49,8 +53,6 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun getCurrentApiaryId() = currentApiaryId
     fun setCurrentApiaryId(id: Int) {currentApiaryId = id}
-    fun getCurrentApiary() = currentApiary
-    fun getCurrentApiaryHives() = currentApiaryHives
 
     fun getApiaryById(id: Int) = viewModelScope.async { repository.getApiaryById(id) }
 

@@ -1,16 +1,19 @@
 package com.example.beehives.viewModel
 
 import android.app.Application
+import android.graphics.Color
+import androidx.annotation.ColorInt
 import androidx.lifecycle.viewModelScope
+import com.example.beehives.R
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.launch
+
 
 class MapsViewModel(application: Application) : BaseViewModel(application) {
 
@@ -36,14 +39,7 @@ class MapsViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun getAllLocations(gMap: GoogleMap) {
-        database.get().addOnSuccessListener { it ->
-            it.documents.forEach {
-                val temp = it.getGeoPoint("Coords")
-                val latlng = LatLng(temp!!.latitude, temp.longitude)
-                gMap.addMarker(MarkerOptions().position(latlng).title("Apiary"))
-                gMap.addCircle(CircleOptions().center(latlng).radius(1500.00))
-            }
-        }
+    fun getAllLocations(): Task<QuerySnapshot> {
+        return database.get()
     }
 }

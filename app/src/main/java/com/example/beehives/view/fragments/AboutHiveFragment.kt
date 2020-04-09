@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -62,10 +61,11 @@ class AboutHiveFragment : Fragment(), RevisionsAdapter.Callback {
         })
 
         add_revision_btn.setOnClickListener {
-            navController.navigate(R.id.addRevisionFragment, bundleOf("current_hive_id" to sharedViewModel.selectedHive))
+            navController.navigate(R.id.addRevisionFragment)
         }
         addLabelButton.setOnClickListener {
-            navController.navigate(R.id.scanFragment, bundleOf("request" to "write", "caller_id" to sharedViewModel.selectedHive))
+            sharedViewModel.scanRequest = "write"
+            navController.navigate(R.id.scanFragment)
         }
 
         buttonAddPhoto.setOnClickListener {

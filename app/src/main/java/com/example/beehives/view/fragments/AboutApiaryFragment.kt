@@ -11,36 +11,25 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.beehives.R
 import com.example.beehives.view.activities.SEPARATOR
 import com.example.beehives.viewModel.BaseViewModel
+import com.example.beehives.viewModel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_about_apiary.*
 
 class AboutApiaryFragment : Fragment() {
 
     private lateinit var viewModel : BaseViewModel
+    private lateinit var sharedViewModel : SharedViewModel
     private lateinit var navController : NavController
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            AboutApiaryFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance =true
-        viewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
-        arguments?.let {
-
-        }
+        viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(BaseViewModel::class.java)
+        sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,7 +40,7 @@ class AboutApiaryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         navController = Navigation.findNavController(apiaryNameEditText)
 
-        viewModel.getCurrentApiary().observe(this@AboutApiaryFragment as LifecycleOwner, Observer {apiary ->
+        viewModel.currentApiary.observe(viewLifecycleOwner, Observer {apiary ->
 
             apiaryNameEditText.text = SpannableStringBuilder(apiary.name)
 
@@ -59,7 +48,8 @@ class AboutApiaryFragment : Fragment() {
                 null, "", SEPARATOR -> {
                     locationImageView.setImageResource(R.drawable.baseline_add_location_24)
                     locationImageView.setOnClickListener {
-                        navController.navigate(R.id.mapsFragment, bundleOf("request" to "add"))
+                        sharedViewModel.mapRequest = "add"
+                        navController.navigate(R.id.mapsFragment)
                     }
                 }
                 else -> {
@@ -68,7 +58,8 @@ class AboutApiaryFragment : Fragment() {
                     lng.text = getString(R.string.longitude, latLng[1])
                     locationImageView.setImageResource(R.drawable.baseline_edit_location_24)
                     locationImageView.setOnClickListener {
-                        navController.navigate(R.id.mapsFragment, bundleOf("request" to "edit"))
+                        sharedViewModel.mapRequest = "edit"
+                        navController.navigate(R.id.mapsFragment)
                     }
                 }
             }

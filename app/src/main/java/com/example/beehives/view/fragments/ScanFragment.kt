@@ -32,8 +32,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-private const val ARG_REQUEST = "request"
-
 class ScanFragment : Fragment(){
 
     private lateinit var options : FirebaseVisionBarcodeDetectorOptions
@@ -41,15 +39,13 @@ class ScanFragment : Fragment(){
     private lateinit var viewModel: ScanViewModel
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var navController : NavController
-    private var request: String? = "reed"
+    private var request: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            request = it.getString(ARG_REQUEST)
-        }
         viewModel = ViewModelProvider(this).get(ScanViewModel::class.java)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
+        request = sharedViewModel.scanRequest
     }
 
     override fun onCreateView(
@@ -113,7 +109,7 @@ class ScanFragment : Fragment(){
     private fun processResult(firebaseVisionBarcodes: List<FirebaseVisionBarcode>) {
         if (firebaseVisionBarcodes.isNotEmpty() && counter == 0){
             counter++
-            if(request == "reed"){
+            if(request == "reed" || request == null){
                 try {
                     CoroutineScope(Dispatchers.IO).launch{
                         sharedViewModel.selectedHive =
@@ -128,5 +124,10 @@ class ScanFragment : Fragment(){
                 navController.popBackStack()
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sharedViewModel.scanRequest = "reed"
     }
 }
