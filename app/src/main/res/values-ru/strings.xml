@@ -43,4 +43,5 @@
     <string name="change_name_breed">Изменить имя/породу</string>
     <string name="set_defaul_image">Сбросить изображение</string>
     <string name="delete_this_hive">Удалить</string>
+    <string name="general">Общие</string>
 </resources>

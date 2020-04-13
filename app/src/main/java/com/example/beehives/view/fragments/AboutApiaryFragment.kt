@@ -1,39 +1,47 @@
 package com.example.beehives.view.fragments
 
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.lifecycle.LifecycleOwner
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.beehives.R
-import com.example.beehives.view.activities.SEPARATOR
-import com.example.beehives.viewModel.BaseViewModel
-import com.example.beehives.viewModel.SharedViewModel
+import com.example.beehives.databinding.FragmentAboutApiaryBinding
+import com.example.beehives.utils.InjectorUtils
+import com.example.beehives.utils.SEPARATOR
+import com.example.beehives.viewModels.BaseViewModel
+import com.example.beehives.viewModels.SharedViewModel
+import com.example.beehives.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_about_apiary.*
 
 class AboutApiaryFragment : Fragment() {
 
     private lateinit var viewModel : BaseViewModel
+    private lateinit var factory: ViewModelFactory
     private lateinit var sharedViewModel : SharedViewModel
     private lateinit var navController : NavController
+    private lateinit var binding: FragmentAboutApiaryBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(BaseViewModel::class.java)
+        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
+        viewModel = ViewModelProvider(activity as ViewModelStoreOwner, factory).get(BaseViewModel::class.java)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_about_apiary, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_about_apiary, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,24 +50,22 @@ class AboutApiaryFragment : Fragment() {
 
         viewModel.currentApiary.observe(viewLifecycleOwner, Observer {apiary ->
 
-            apiaryNameEditText.text = SpannableStringBuilder(apiary.name)
+            val latLng = apiary.location!!.split(SEPARATOR)
+            lat.text = getString(R.string.latitude, latLng[0])
+            lng.text = getString(R.string.longitude, latLng[1])
+//            apiaryNameEditText.text = SpannableStringBuilder(apiary.name)
 
             when(apiary.location){
                 null, "", SEPARATOR -> {
-                    locationImageView.setImageResource(R.drawable.baseline_add_location_24)
                     locationImageView.setOnClickListener {
                         sharedViewModel.mapRequest = "add"
-                        navController.navigate(R.id.mapsFragment)
+                        navController.navigate(R.id.action_aboutApiaryFragment_to_mapsFragment)
                     }
                 }
                 else -> {
-                    val latLng = apiary.location!!.split(SEPARATOR)
-                    lat.text = getString(R.string.latitude, latLng[0])
-                    lng.text = getString(R.string.longitude, latLng[1])
-                    locationImageView.setImageResource(R.drawable.baseline_edit_location_24)
                     locationImageView.setOnClickListener {
                         sharedViewModel.mapRequest = "edit"
-                        navController.navigate(R.id.mapsFragment)
+                        navController.navigate(R.id.action_aboutApiaryFragment_to_mapsFragment)
                     }
                 }
             }

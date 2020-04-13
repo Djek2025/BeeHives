@@ -25,6 +25,9 @@ interface GeneralDao {
     @Query("SELECT * FROM Hive WHERE id = :id")
     suspend fun getHiveById(id: Int): Hive
 
+    @Query("SELECT * FROM Revision WHERE id = :id")
+    suspend fun getRevisionById(id: Int): Revision
+
     @Query("SELECT * FROM Revision WHERE hiveId = :hiveId")
     fun getHiveRevisions(hiveId: Int): LiveData<List<Revision>>
 

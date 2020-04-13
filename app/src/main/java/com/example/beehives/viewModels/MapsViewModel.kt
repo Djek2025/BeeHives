@@ -1,21 +1,13 @@
-package com.example.beehives.viewModel
+package com.example.beehives.viewModels
 
 import android.app.Application
-import android.graphics.Color
-import androidx.annotation.ColorInt
 import androidx.lifecycle.viewModelScope
-import com.example.beehives.R
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.example.beehives.model.repositories.MainRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.launch
 
-
-class MapsViewModel(application: Application) : BaseViewModel(application) {
+class MapsViewModel(application: Application, repository: MainRepository) : BaseViewModel(application, repository) {
 
     private val database : CollectionReference = FirebaseFirestore.getInstance().collection("Apiaries")
 

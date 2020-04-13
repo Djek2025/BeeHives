@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.beehives.viewModel.SharedViewModel" />
+            type="com.example.beehives.viewModels.SharedViewModel" />
 
     </data>
 

@@ -1,33 +1,32 @@
-package com.example.beehives.viewModel
+package com.example.beehives.viewModels
 
 import android.app.Application
-import android.text.Editable
-import android.text.SpannableStringBuilder
-import android.widget.EditText
-import android.widget.SeekBar
-import androidx.databinding.BindingAdapter
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.beehives.model.db.entities.Revision
+import com.example.beehives.model.repositories.MainRepository
 import com.example.beehives.utils.TimeConverter
-import com.example.beehives.view.activities.SEPARATOR
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-class RevisionViewModel(application: Application) : BaseViewModel(application) {
+class RevisionViewModel(application: Application, private val repository: MainRepository) : AndroidViewModel(application) {
 
     val defStr = "60%"
-    private val repository = getRepo()
-    val lastRevision: MutableLiveData<Revision> by lazy { MutableLiveData<Revision>() }
     private var date: Long? = null
     private val timeConverter = TimeConverter()
+    val lastRevision: MutableLiveData<Revision> by lazy { MutableLiveData<Revision>() }
 
     init {
         date = timeConverter.getTimeLong()
     }
 
     fun getDate() = timeConverter.getTimeLong()
+
     fun getDateStr() = timeConverter.longToString(timeConverter.getTimeLong())
 
     fun getLastRev(hiveId: Int) = viewModelScope.async { repository.getLastRevisionByHiveId(hiveId) }
+
+    fun insertRevision(revision: Revision) = viewModelScope.launch { repository.insertRevision(revision) }
 
 }

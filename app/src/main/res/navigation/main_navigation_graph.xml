@@ -12,10 +12,18 @@
         tools:layout="@layout/fragment_hives" >
         <action
             android:id="@+id/action_hivesFragment_to_aboutHiveFragment"
-            app:destination="@id/aboutHiveFragment" />
+            app:destination="@id/aboutHiveFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_hivesFragment_to_aboutApiaryFragment"
-            app:destination="@id/aboutApiaryFragment" />
+            app:destination="@id/aboutApiaryFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -25,7 +33,11 @@
         tools:layout="@layout/fragment_about_hive" >
         <action
             android:id="@+id/action_aboutHiveFragment_to_addRevisionFragment"
-            app:destination="@id/addRevisionFragment" />
+            app:destination="@id/addRevisionFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -38,7 +50,15 @@
         android:id="@+id/aboutApiaryFragment"
         android:name="com.example.beehives.view.fragments.AboutApiaryFragment"
         android:label="fragment_about_apiary"
-        tools:layout="@layout/fragment_about_apiary" />
+        tools:layout="@layout/fragment_about_apiary" >
+        <action
+            android:id="@+id/action_aboutApiaryFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@animator/card_flip_right_enter"
+            app:exitAnim="@animator/card_flip_right_exit"
+            app:popEnterAnim="@animator/card_flip_left_enter"
+            app:popExitAnim="@animator/card_flip_left_exit" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"
@@ -49,12 +69,23 @@
         android:id="@+id/mapsFragment"
         android:name="com.example.beehives.view.fragments.MapsFragment"
         android:label="MapsFragment" />
-    <action android:id="@+id/action_global_hivesFragment" app:destination="@id/hivesFragment" />
-    <action android:id="@+id/action_global_settingsFragment" app:destination="@id/settingsFragment" /><action android:id="@+id/action_global_mapsFragment" app:destination="@id/mapsFragment"/>
 
     <fragment
         android:id="@+id/scanFragment"
         android:name="com.example.beehives.view.fragments.ScanFragment"
         android:label="fragment_scan"
-        tools:layout="@layout/fragment_scan" /><action android:id="@+id/action_global_scanFragment" app:destination="@id/scanFragment"/>
+        tools:layout="@layout/fragment_scan" >
+        <action
+            android:id="@+id/action_scanFragment_to_aboutHiveFragment"
+            app:destination="@id/aboutHiveFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/graphsFragment"
+        android:name="com.example.beehives.view.fragments.ChartsFragment"
+        android:label="fragment_graphs"
+        tools:layout="@layout/fragment_charts" />
 </navigation>

@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Revision
+import com.example.beehives.utils.SEPARATOR
 import com.example.beehives.utils.TimeConverter
-import com.example.beehives.view.activities.SEPARATOR
 import kotlinx.android.synthetic.main.item_for_revisions_recycler.view.*
 
 class RevisionsAdapter (val callback : Callback)

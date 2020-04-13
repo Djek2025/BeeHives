@@ -2,14 +2,14 @@ package com.example.beehives.model.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.beehives.view.activities.DEFAULT_PHOTO_HIVE
+import com.example.beehives.utils.DEFAULT_PHOTO_HIVE
 
 @Entity
 data class Hive(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val apiaryId: Int? = null,
-    val name: String? = "Hive",
+    var name: String? = "Hive",
     val breed: String? = "Golden Italian",
     val beeQueenId: Int? = null,
     val label: String? = null,

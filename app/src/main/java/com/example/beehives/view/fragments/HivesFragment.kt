@@ -14,9 +14,11 @@ import androidx.navigation.Navigation
 import com.example.beehives.R
 import com.example.beehives.databinding.FragmentHivesBinding
 import com.example.beehives.model.db.entities.Hive
+import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.view.adapters.HivesAdapter
-import com.example.beehives.viewModel.HivesViewModel
-import com.example.beehives.viewModel.SharedViewModel
+import com.example.beehives.viewModels.HivesViewModel
+import com.example.beehives.viewModels.SharedViewModel
+import com.example.beehives.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_hives.*
 
 class HivesFragment : Fragment(), HivesAdapter.Callback {
@@ -24,13 +26,15 @@ class HivesFragment : Fragment(), HivesAdapter.Callback {
     private var apiaryId : Int? = null
     private lateinit var binding: FragmentHivesBinding
     private lateinit var viewModel : HivesViewModel
+    private lateinit var factory: ViewModelFactory
     private lateinit var sharedViewModel : SharedViewModel
     private lateinit var navController : NavController
     private val adapter by lazy { HivesAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HivesViewModel::class.java)
+        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
+        viewModel = ViewModelProvider(this, factory).get(HivesViewModel::class.java)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
         apiaryId = viewModel.getCurrentApiaryId()
     }
@@ -60,7 +64,7 @@ class HivesFragment : Fragment(), HivesAdapter.Callback {
 
     override fun onItemClick(item: Hive) {
         sharedViewModel.selectedHive = item.id!!
-        navController.navigate(R.id.aboutHiveFragment)
+        navController.navigate(R.id.action_hivesFragment_to_aboutHiveFragment)
     }
 
     override fun onItemLongClick(item: Hive) {

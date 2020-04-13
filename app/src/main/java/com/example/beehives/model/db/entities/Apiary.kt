@@ -2,7 +2,7 @@ package com.example.beehives.model.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.beehives.view.activities.SEPARATOR
+import com.example.beehives.utils.SEPARATOR
 
 @Entity
 data class Apiary(

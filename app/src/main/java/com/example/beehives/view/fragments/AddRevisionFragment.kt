@@ -14,12 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.beehives.R
 import com.example.beehives.databinding.FragmentAddRevisionBinding
-import com.example.beehives.utils.TimeConverter
 import com.example.beehives.model.db.entities.Revision
-import com.example.beehives.view.activities.SEPARATOR
-import com.example.beehives.viewModel.BaseViewModel
-import com.example.beehives.viewModel.RevisionViewModel
-import com.example.beehives.viewModel.SharedViewModel
+import com.example.beehives.utils.InjectorUtils
+import com.example.beehives.utils.SEPARATOR
+import com.example.beehives.viewModels.RevisionViewModel
+import com.example.beehives.viewModels.SharedViewModel
+import com.example.beehives.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_add_revision.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,13 +29,15 @@ import kotlinx.coroutines.withContext
 class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePickerDialog.OnDateSetListener {
 
     private lateinit var viewModel : RevisionViewModel
+    private lateinit var factory: ViewModelFactory
     private lateinit var sharedViewModel : SharedViewModel
     private lateinit var binding: FragmentAddRevisionBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RevisionViewModel::class.java)
+        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
+        viewModel = ViewModelProvider(this, factory).get(RevisionViewModel::class.java)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
     }
 
@@ -51,14 +53,14 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
         seekBar.setOnSeekBarChangeListener(this)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val lrev = viewModel.getLastRev(sharedViewModel.selectedHive).await()
+            val lastRev = viewModel.getLastRev(sharedViewModel.selectedHive).await()
             withContext(Dispatchers.Main){
-                viewModel.lastRevision.value = lrev
+                viewModel.lastRevision.value = lastRev
             }
         }
 
         floatingActionButton2.setOnClickListener {
-            viewModel.insertRevison(Revision(
+            viewModel.insertRevision(Revision(
                 hiveId = sharedViewModel.selectedHive,
                 date = viewModel.getDate(),
                 strength = seekBar.progress,

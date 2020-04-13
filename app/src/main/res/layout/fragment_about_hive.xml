@@ -7,7 +7,7 @@
         <import type="androidx.lifecycle.LiveData" />
         <variable
             name="vm"
-            type="com.example.beehives.viewModel.AboutHiveViewModel" />
+            type="com.example.beehives.viewModels.AboutHiveViewModel" />
     </data>
 
     <ScrollView

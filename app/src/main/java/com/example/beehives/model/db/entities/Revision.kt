@@ -8,7 +8,7 @@ data class Revision(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val hiveId: Int? = null,
-    val date: Long? = 1583020800L,
+    var date: Long? = 1583020800L,
     val strength: Int? = 60,
     val frames: String? = null,
     val note: String? = null

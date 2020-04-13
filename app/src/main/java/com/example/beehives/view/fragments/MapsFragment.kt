@@ -1,6 +1,5 @@
 package com.example.beehives.view.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.beehives.R
 import com.example.beehives.databinding.FragmentMapsBinding
-import com.example.beehives.view.activities.SEPARATOR
-import com.example.beehives.viewModel.MapsViewModel
-import com.example.beehives.viewModel.SharedViewModel
+import com.example.beehives.utils.InjectorUtils
+import com.example.beehives.utils.SEPARATOR
+import com.example.beehives.viewModels.MapsViewModel
+import com.example.beehives.viewModels.SharedViewModel
+import com.example.beehives.viewModels.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -31,13 +32,15 @@ import kotlinx.coroutines.launch
 class MapsFragment : Fragment() {
 
     private lateinit var viewModel : MapsViewModel
+    private lateinit var factory: ViewModelFactory
     private lateinit var sharedViewModel : SharedViewModel
     private lateinit var binding: FragmentMapsBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MapsViewModel::class.java)
+        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
+        viewModel = ViewModelProvider(this, factory).get(MapsViewModel::class.java)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
     }
 //————————————————————————————————————————————————————————————————————————————————————————————————
@@ -75,7 +78,7 @@ class MapsFragment : Fragment() {
             }
             else -> {
                 markerCenter.remove()
-                viewModel.getAllLocations().addOnSuccessListener {
+                viewModel.getAllLocations().addOnSuccessListener { it ->
                     it.documents.forEach {
                         val temp = it.getGeoPoint("Coords")
                         val latlng = LatLng(temp!!.latitude, temp.longitude)

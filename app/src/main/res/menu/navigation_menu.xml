@@ -12,7 +12,7 @@
             android:icon="@drawable/baseline_place_24"
             android:title="@string/map" />
         <item
-            android:id="@+id/navigation_graphs"
+            android:id="@+id/graphsFragment"
             android:icon="@drawable/baseline_poll_24"
             android:title="@string/graphs" />
         <item

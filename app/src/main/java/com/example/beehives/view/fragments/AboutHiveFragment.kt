@@ -16,10 +16,12 @@ import androidx.navigation.Navigation
 import com.example.beehives.R
 import com.example.beehives.databinding.FragmentAboutHiveBinding
 import com.example.beehives.model.db.entities.Revision
-import com.example.beehives.view.activities.DEFAULT_PHOTO_HIVE
+import com.example.beehives.utils.DEFAULT_PHOTO_HIVE
+import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.view.adapters.RevisionsAdapter
-import com.example.beehives.viewModel.AboutHiveViewModel
-import com.example.beehives.viewModel.SharedViewModel
+import com.example.beehives.viewModels.AboutHiveViewModel
+import com.example.beehives.viewModels.SharedViewModel
+import com.example.beehives.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_about_hive.*
 import kotlinx.coroutines.*
 
@@ -28,6 +30,7 @@ private const val ARG_PHOTO_REQUEST = 33
 class AboutHiveFragment : Fragment(), RevisionsAdapter.Callback {
 
     private lateinit var viewModelAbout: AboutHiveViewModel
+    private lateinit var factory: ViewModelFactory
     private lateinit var sharedViewModel : SharedViewModel
     private lateinit var navController: NavController
     private lateinit var binding: FragmentAboutHiveBinding
@@ -36,7 +39,8 @@ class AboutHiveFragment : Fragment(), RevisionsAdapter.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
-        viewModelAbout = ViewModelProvider(this).get(AboutHiveViewModel::class.java)
+        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
+        viewModelAbout = ViewModelProvider(this, factory).get(AboutHiveViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,7 +65,7 @@ class AboutHiveFragment : Fragment(), RevisionsAdapter.Callback {
         })
 
         add_revision_btn.setOnClickListener {
-            navController.navigate(R.id.addRevisionFragment)
+            navController.navigate(R.id.action_aboutHiveFragment_to_addRevisionFragment)
         }
         addLabelButton.setOnClickListener {
             sharedViewModel.scanRequest = "write"

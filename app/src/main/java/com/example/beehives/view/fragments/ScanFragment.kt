@@ -11,8 +11,10 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.beehives.R
-import com.example.beehives.viewModel.ScanViewModel
-import com.example.beehives.viewModel.SharedViewModel
+import com.example.beehives.utils.InjectorUtils
+import com.example.beehives.viewModels.ScanViewModel
+import com.example.beehives.viewModels.SharedViewModel
+import com.example.beehives.viewModels.ViewModelFactory
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector
@@ -37,13 +39,15 @@ class ScanFragment : Fragment(){
     private lateinit var options : FirebaseVisionBarcodeDetectorOptions
     private lateinit var detector: FirebaseVisionBarcodeDetector
     private lateinit var viewModel: ScanViewModel
+    private lateinit var factory: ViewModelFactory
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var navController : NavController
     private var request: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ScanViewModel::class.java)
+        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
+        viewModel = ViewModelProvider(this, factory).get(ScanViewModel::class.java)
         sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
         request = sharedViewModel.scanRequest
     }
@@ -74,7 +78,7 @@ class ScanFragment : Fragment(){
             }).check()
     }
 
-    private fun setupCamera() {
+    fun setupCamera() {
         options = FirebaseVisionBarcodeDetectorOptions.Builder()
             .setBarcodeFormats(
                 FirebaseVisionBarcode.FORMAT_QR_CODE,
@@ -88,7 +92,7 @@ class ScanFragment : Fragment(){
         }
     }
 
-    private fun getVisionImageFromFrame(frame: Frame): FirebaseVisionImage {
+    fun getVisionImageFromFrame(frame: Frame): FirebaseVisionImage {
         val metadata = FirebaseVisionImageMetadata.Builder()
             .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
             .setHeight(frame.size.height)
@@ -97,7 +101,7 @@ class ScanFragment : Fragment(){
         return FirebaseVisionImage.fromByteArray(frame.getData<ByteArray>(), metadata)
     }
 
-    private fun proccesImage(visionImageFromFrame: FirebaseVisionImage){
+    fun proccesImage(visionImageFromFrame: FirebaseVisionImage){
         detector.detectInImage(visionImageFromFrame)
             .addOnFailureListener{ e -> Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()}
             .addOnSuccessListener { firebaseVisionBarcodes ->
@@ -106,7 +110,7 @@ class ScanFragment : Fragment(){
     }
 
     private var counter = 0
-    private fun processResult(firebaseVisionBarcodes: List<FirebaseVisionBarcode>) {
+    fun processResult(firebaseVisionBarcodes: List<FirebaseVisionBarcode>) {
         if (firebaseVisionBarcodes.isNotEmpty() && counter == 0){
             counter++
             if(request == "reed" || request == null){
@@ -115,7 +119,7 @@ class ScanFragment : Fragment(){
                         sharedViewModel.selectedHive =
                             viewModel.getHiveIdByLabelAsync(firebaseVisionBarcodes.first().rawValue!!).await()
                     }
-                    navController.navigate(R.id.aboutHiveFragment)
+                    navController.navigate(R.id.action_scanFragment_to_aboutHiveFragment)
                 } catch (e: Exception) {
                     Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show()
                 }
