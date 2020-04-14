@@ -16,7 +16,7 @@ import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.utils.SEPARATOR
 import com.example.beehives.viewModels.MapsViewModel
 import com.example.beehives.viewModels.SharedViewModel
-import com.example.beehives.viewModels.ViewModelFactory
+import com.example.beehives.utils.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

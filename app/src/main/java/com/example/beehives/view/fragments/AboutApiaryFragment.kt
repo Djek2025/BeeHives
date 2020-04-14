@@ -18,7 +18,7 @@ import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.utils.SEPARATOR
 import com.example.beehives.viewModels.BaseViewModel
 import com.example.beehives.viewModels.SharedViewModel
-import com.example.beehives.viewModels.ViewModelFactory
+import com.example.beehives.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_about_apiary.*
 
 class AboutApiaryFragment : Fragment() {

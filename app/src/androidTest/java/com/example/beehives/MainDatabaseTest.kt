@@ -8,6 +8,7 @@ import com.example.beehives.model.db.dao.GeneralDao
 import com.example.beehives.model.db.entities.Apiary
 import com.example.beehives.model.db.entities.Hive
 import com.example.beehives.model.db.entities.Revision
+import com.example.beehives.utils.SEPARATOR
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -31,6 +32,37 @@ class MainDatabaseTest {
         ).build()
 
         dao = database.generalDao()
+
+        for (i in 1..10) {
+            runBlocking { dao.insertRevision(Revision(id = i, hiveId = i)) }
+            runBlocking { dao.insertHive(Hive(id = i, apiaryId = i)) }
+            runBlocking { dao.insertApiary(Apiary(id = i)) }
+        }
+
+    }
+
+    @Test
+    fun updateApiaryLocationById() {
+        //Given
+        var testThanCoordsEmpty = runBlocking { dao.getApiaryById(5) }
+        assertEquals(testThanCoordsEmpty.location, SEPARATOR)
+        val geoCoords = "123456789${SEPARATOR}123456789"
+        //When
+        runBlocking { dao.updateApiaryLocationById(5, geoCoords) }
+        //Then
+        testThanCoordsEmpty = runBlocking { dao.getApiaryById(5) }
+        assertEquals(testThanCoordsEmpty.location, geoCoords)
+
+    }
+
+    @Test
+    fun getLastRevisionByHiveId() {
+        //Given
+
+        //When
+        val rev = runBlocking { dao.getLastRevisionByHiveId(5) }
+        //Then
+        assertEquals(5, rev.id)
 
     }
 
@@ -96,7 +128,8 @@ class MainDatabaseTest {
     }
 
     @After
-    fun tearDown() {
+    fun after() {
+        database.clearAllTables()
         database.close()
     }
 }

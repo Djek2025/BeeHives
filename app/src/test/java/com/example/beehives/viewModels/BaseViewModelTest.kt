@@ -46,5 +46,10 @@ class BaseViewModelTest {
         apiaryHives.value = listOf(Hive(2,3), Hive(3,4))
         Assert.assertEquals(vm.currentApiary.getOrAwaitValue(), apiary.value)
         Assert.assertEquals(vm.currentApiaryHives.getOrAwaitValue(), apiaryHives.value)
+
+
+        verify(repository, times(1)).getApiaryByIdLd(any())
+        verify(repository, times(1)).getApiaryHives(any())
+
     }
 }

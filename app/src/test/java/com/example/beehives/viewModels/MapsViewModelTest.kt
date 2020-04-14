@@ -9,7 +9,7 @@ import org.junit.rules.TestRule
 
 class MapsViewModelTest {
 
-    /*
+    /**
     * Firebase Firestore
     */
 
@@ -18,6 +18,7 @@ class MapsViewModelTest {
 
     @Before
     fun setUp(){
+
     }
 
     @Test

@@ -2,6 +2,8 @@ package com.example.beehives.cache
 
 import android.content.SharedPreferences
 import javax.inject.Singleton
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 @Singleton
 class SPCache(private val sp: SharedPreferences) {

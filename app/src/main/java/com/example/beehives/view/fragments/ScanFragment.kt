@@ -14,7 +14,7 @@ import com.example.beehives.R
 import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.viewModels.ScanViewModel
 import com.example.beehives.viewModels.SharedViewModel
-import com.example.beehives.viewModels.ViewModelFactory
+import com.example.beehives.utils.ViewModelFactory
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector

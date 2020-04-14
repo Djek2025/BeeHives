@@ -16,7 +16,7 @@ import com.example.beehives.databinding.ActivityMainBinding
 import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.view.fragments.SettingsFragment
 import com.example.beehives.viewModels.BaseViewModel
-import com.example.beehives.viewModels.ViewModelFactory
+import com.example.beehives.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_menu_header.view.*
 

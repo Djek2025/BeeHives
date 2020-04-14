@@ -24,9 +24,7 @@ class MainRepository(private val dao: GeneralDao) {
     suspend fun setLabelByHiveId(id: Int, label: String) = dao.setLabelByHiveId(id, label)
     suspend fun setPhotoByHiveId(id: Int, photo: String) = dao.setPhotoByHiveId(id, photo)
 
-    suspend fun updateApiaryLocationById(id:Int, location : String) {
-        dao.updateApiaryLocationById(id, location)
-    }
+    suspend fun updateApiaryLocationById(id:Int, location : String) { dao.updateApiaryLocationById(id, location) }
 
     suspend fun deleteHiveById(hiveId: Int){ dao.deleteHiveById(hiveId)}
     suspend fun deleteRevisionsByHiveId(hiveId: Int){ dao.deleteRevisionsByHiveId(hiveId)}

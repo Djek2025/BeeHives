@@ -19,7 +19,7 @@ import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.utils.SEPARATOR
 import com.example.beehives.viewModels.RevisionViewModel
 import com.example.beehives.viewModels.SharedViewModel
-import com.example.beehives.viewModels.ViewModelFactory
+import com.example.beehives.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_add_revision.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

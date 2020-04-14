@@ -18,7 +18,7 @@ import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.view.adapters.HivesAdapter
 import com.example.beehives.viewModels.HivesViewModel
 import com.example.beehives.viewModels.SharedViewModel
-import com.example.beehives.viewModels.ViewModelFactory
+import com.example.beehives.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_hives.*
 
 class HivesFragment : Fragment(), HivesAdapter.Callback {
