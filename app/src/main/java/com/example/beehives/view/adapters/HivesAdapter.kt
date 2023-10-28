@@ -21,20 +21,13 @@ class HivesAdapter(val callback : Callback) : RecyclerView.Adapter<HivesAdapter.
 
     interface Callback {
         fun onItemClick(item : Hive)
-        fun onItemLongClick(item: Hive)
+        fun onItemLongClick(item: Hive, view: View)
     }
 
-    override fun getItemCount(): Int {
-        return  hives.size + 1
-    }
+    override fun getItemCount() = hives.size
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-
-        if (holder.adapterPosition == 0){
-//            holder.itemView.photo.visibility = View.GONE
-        }else{
-            holder.onBind(hives[position - 1])
-        }
+        holder.onBind(hives[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -53,11 +46,9 @@ class HivesAdapter(val callback : Callback) : RecyclerView.Adapter<HivesAdapter.
                 callback.onItemClick(item)
             }
             itemView.setOnLongClickListener {
-                callback.onItemLongClick(item)
+                callback.onItemLongClick(item, itemView)
                 true
             }
         }
     }
-
-
 }

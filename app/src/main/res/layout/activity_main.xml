@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.example.beehives.viewModels.BaseViewModel" />
@@ -13,19 +14,13 @@
         android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
-        <FrameLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/frame"
+            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageViewBottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitStart"
-                android:src="@drawable/honey_down" />
 
             <fragment
                 android:id="@+id/nav_host_fragment"
@@ -35,33 +30,48 @@
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/main_navigation_graph" />
 
-            <ImageView
-                android:id="@+id/imageViewTop"
+            <LinearLayout
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitStart"
-                android:src="@drawable/honey_top" />
+                android:background="@color/toolbarColor"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/navigation_menu_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/round_menu_24"
-                android:backgroundTint="@color/common_google_signin_btn_text_light" />
-        </FrameLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/navigation_menu_button"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:padding="16dp"
+                    app:icon="@drawable/round_menu_black_24"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="24dp"
+                    android:background="#00000000"
+                    app:iconTint="@color/primaryTextColor" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/honeycombTextImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:scaleType="fitStart"
+                    android:layout_gravity="center"
+                    android:src="@drawable/honeycomb_logo_text_only" />
+
+            </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:fitsSystemWindows="true"
             app:headerLayout="@layout/navigation_menu_header"
+            app:itemTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/navigation_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
+
 </layout>

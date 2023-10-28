@@ -1,47 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/darker_gray"
-    android:orientation="horizontal"
-    android:paddingBottom="1dp">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="1dp"
-        android:layout_weight="20"
-        android:gravity="center"
-        android:text="@string/date" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="1dp">
 
-    <TextView
-        android:id="@+id/frames"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_weight="25"
-        android:gravity="center"
-        android:text="@string/frames" />
+        <TextView
+            android:id="@+id/date"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:text="@string/date" />
 
-    <TextView
-        android:id="@+id/strength"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="1dp"
-        android:layout_weight="10"
-        android:gravity="center"
-        android:text="@string/str" />
+        <TextView
+            android:id="@+id/frames"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:gravity="center"
+            android:text="@string/frames" />
 
-    <TextView
-        android:id="@+id/note"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="1dp"
-        android:layout_weight="45"
-        android:gravity="center"
-        android:text="@string/note" />
+        <TextView
+            android:id="@+id/strength"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:text="@string/str" />
+
+        <TextView
+            android:id="@+id/note"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="45"
+            android:gravity="center"
+            android:text="@string/note" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#C0C0C0">
+
+    </FrameLayout>
 
 
 </LinearLayout>

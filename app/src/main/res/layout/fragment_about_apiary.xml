@@ -14,35 +14,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:paddingTop="56dp"
+        android:clipToPadding="false"
         tools:context=".view.fragments.AboutApiaryFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="96dp"
-                android:gravity="center"
-                android:text="@string/name"
-                android:textSize="56sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
                 android:id="@+id/apiaryNameEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
-                android:inputType="text"
+                android:backgroundTint="@color/primaryColor"
                 android:text="@{vm.currentApiary.name}"
-                android:textSize="24sp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/lat"
@@ -62,28 +52,60 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lat" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/locationImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:geoBtn="@{vm.currentApiary.location}"
-                android:tint="@color/common_google_signin_btn_text_light"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton"
+                style="@style/ButtonHexagone"
+                app:iconTint="@color/primaryTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSaveName"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lng" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/buttonSaveName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_save_24"
-                android:tint="@color/common_google_signin_btn_text_light"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/locationImageView"
-                app:layout_constraintTop_toBottomOf="@+id/lng" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton4"
+                style="@style/ButtonHexagone"
+                android:translationX="3dp"
+                app:layout_constraintStart_toEndOf="@+id/materialButton"
+                app:layout_constraintTop_toTopOf="@+id/materialButton" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton2"
+                style="@style/ButtonHexagone"
+                android:translationX="45dp"
+                android:translationY="-22dp"
+                app:layout_constraintStart_toStartOf="@+id/materialButton"
+                app:layout_constraintTop_toBottomOf="@+id/materialButton" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/locationImageView"
+                style="@style/ButtonHexagone"
+                android:tooltipText="Add or change apiary location"
+                android:translationX="42dp"
+                android:translationY="-22dp"
+                app:geoBtn="@{vm.currentApiary.location}"
+                app:layout_constraintEnd_toStartOf="@+id/materialButton2"
+                app:layout_constraintTop_toTopOf="@+id/materialButton2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonEditName"
+                style="@style/ButtonHexagone"
+                android:tooltipText="Change aoiary info"
+                android:translationX="-3dp"
+                app:icon="@drawable/round_create_24"
+                app:layout_constraintEnd_toStartOf="@+id/materialButton"
+                app:layout_constraintTop_toTopOf="@+id/materialButton" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDelApiary"
+                style="@style/ButtonHexagone"
+                android:tooltipText="Delete this apiary and hives"
+                android:translationX="45dp"
+                android:translationY="22dp"
+                app:icon="@drawable/baseline_delete_forever_24"
+                app:layout_constraintBottom_toTopOf="@+id/materialButton4"
+                app:layout_constraintEnd_toEndOf="@+id/materialButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

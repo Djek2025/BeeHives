@@ -10,8 +10,8 @@ data class Hive(
     val id: Int? = null,
     val apiaryId: Int? = null,
     var name: String? = "Hive",
-    val breed: String? = "Golden Italian",
-    val beeQueenId: Int? = null,
+    var breed: String? = "Golden Italian",
+    var beeQueenId: Int? = null,
     val label: String? = null,
     var photo: String? = DEFAULT_PHOTO_HIVE
 )

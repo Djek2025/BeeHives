@@ -29,7 +29,9 @@ abstract class MainDatabase : RoomDatabase() {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
                         MainDatabase::class.java, "BeeHives"
-                    ).build()
+                    )
+                        .allowMainThreadQueries()
+                        .build()
                     INSTANCE = instance
                     return instance
                 }

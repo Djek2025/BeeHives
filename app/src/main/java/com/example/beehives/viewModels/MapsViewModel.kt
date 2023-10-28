@@ -1,13 +1,14 @@
 package com.example.beehives.viewModels
 
 import android.app.Application
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.beehives.model.repositories.MainRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.launch
 
-class MapsViewModel(application: Application, repository: MainRepository) : BaseViewModel(application, repository) {
+class MapsViewModel() : BaseViewModel() {
 
     private val database : CollectionReference = FirebaseFirestore.getInstance().collection("Apiaries")
 

@@ -3,42 +3,46 @@ package com.example.beehives.view.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.SeekBar
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.example.beehives.App
 import com.example.beehives.R
 import com.example.beehives.databinding.FragmentAddRevisionBinding
 import com.example.beehives.model.db.entities.Revision
 import com.example.beehives.utils.InjectorUtils
 import com.example.beehives.utils.SEPARATOR
+import com.example.beehives.utils.SEPARATOR_SECONDARY
 import com.example.beehives.viewModels.RevisionViewModel
 import com.example.beehives.viewModels.SharedViewModel
 import com.example.beehives.utils.ViewModelFactory
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_add_revision.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.android.synthetic.main.item_for_enter_frames_count.view.*
+import java.util.*
+import javax.inject.Inject
 
 class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePickerDialog.OnDateSetListener {
 
-    private lateinit var viewModel : RevisionViewModel
-    private lateinit var factory: ViewModelFactory
-    private lateinit var sharedViewModel : SharedViewModel
+    @Inject lateinit var viewModel : RevisionViewModel
+    @Inject lateinit var sharedViewModel : SharedViewModel
     private lateinit var binding: FragmentAddRevisionBinding
+
+    private val builder = MaterialDatePicker.Builder.datePicker()
+    private val datePicker = builder.build()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
-        viewModel = ViewModelProvider(this, factory).get(RevisionViewModel::class.java)
-        sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
+        (activity?.application as App).getComponent().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,16 +56,42 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
         super.onActivityCreated(savedInstanceState)
         seekBar.setOnSeekBarChangeListener(this)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val lastRev = viewModel.getLastRev(sharedViewModel.selectedHive).await()
-            withContext(Dispatchers.Main){
-                viewModel.lastRevision.value = lastRev
+        sharedViewModel.liveInsets.observe(viewLifecycleOwner){
+            binding.scrollView.updatePadding(bottom = it.getValue("bottom"))
+        }
+
+        viewModel.lastRevision.value = viewModel.getLastRev(sharedViewModel.selectedHiveId)
+
+        viewModel.lastRevision.value?.frames?.split(SEPARATOR_SECONDARY)?.forEach {
+            if (it.isNotEmpty()){
+                viewModel.bodies.add(it)
             }
+        }
+
+        if ( viewModel.bodies.isNotEmpty()) {
+            viewModel.bodies.forEach {
+                val frames = it.split(SEPARATOR)
+                if (it.isNotEmpty()) {
+                    binding.rootLinear.addView(layoutInflater.inflate(R.layout.item_for_enter_frames_count, rootLinear, false)
+                        .apply {
+                            tag = "new_views"
+                                editTextFramesInstall.text = SpannableStringBuilder(frames[0])
+                                editTextFramesInstallOf.text = SpannableStringBuilder(frames[1])
+                                editTextFrameSize.text = SpannableStringBuilder(frames[2])
+                        }
+                    )
+                }
+            }
+        } else {
+            binding.rootLinear.addView(layoutInflater.inflate(R.layout.item_for_enter_frames_count, rootLinear, false).apply {
+                tag = "new_views"
+            })
+            viewModel.bodies.add(String())
         }
 
         floatingActionButton2.setOnClickListener {
             viewModel.insertRevision(Revision(
-                hiveId = sharedViewModel.selectedHive,
+                hiveId = sharedViewModel.selectedHiveId,
                 date = viewModel.getDate(),
                 strength = seekBar.progress,
                 frames = getFramesStr(),
@@ -70,18 +100,41 @@ class AddRevisionFragment : Fragment(), SeekBar.OnSeekBarChangeListener, DatePic
             activity?.onBackPressed()
         }
 
-//        selectDate.setOnClickListener {
-//            DatePickerDialog(context!!, this,
-//                calendar.get(Calendar.YEAR),
-//                calendar.get(Calendar.MONTH),
-//                calendar.get(Calendar.DAY_OF_MONTH)).show()
-//        }
+        selectDateBtn.setOnClickListener {
+            datePicker.addOnPositiveButtonClickListener {
+                val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                calendar.time = Date(it)
+                viewModel.setDate(it)
+                selectDate.text = "${calendar.get(Calendar.DAY_OF_MONTH)}." +
+                        "${calendar.get(Calendar.MONTH) + 1}.${calendar.get(Calendar.YEAR)}"
+            }
+            datePicker.show(requireFragmentManager(), "MyTAG")
+        }
+
+        binding.buttonAddFrameField.setOnClickListener {
+            binding.rootLinear.addView(layoutInflater.inflate(R.layout.item_for_enter_frames_count, rootLinear, false).apply { tag = "new_views" })
+            viewModel.bodies.add(String())
+        }
+
+        binding.buttonDelFrameField.setOnClickListener {
+            val fd = view?.findViewWithTag<ViewGroup>("new_views")
+            binding.rootLinear.removeView(fd)
+            viewModel.bodies.removeLast()
+        }
     }
 
-    fun getFramesStr(): String{
-        return editTextFramesInstall.text.toString() + SEPARATOR +
-                editTextFramesInstallOf.text.toString() + SEPARATOR +
-                editTextFrameSize.text.toString()
+    private fun getFramesStr(): String{
+        var str = ""
+        for (i in 0..viewModel.bodies.count()){
+            val fd = view?.findViewWithTag<ViewGroup>("new_views")
+            if (fd != null) {
+                str += fd.editTextFramesInstall.text.toString() + SEPARATOR
+                str += fd.editTextFramesInstallOf.text.toString() + SEPARATOR
+                str += fd.editTextFrameSize.text.toString() + SEPARATOR_SECONDARY
+            }
+            binding.rootLinear.removeView(fd)
+        }
+        return str
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {

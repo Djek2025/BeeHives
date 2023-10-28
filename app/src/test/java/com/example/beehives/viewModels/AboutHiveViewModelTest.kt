@@ -10,7 +10,6 @@ import com.example.beehives.utils.getOrAwaitValue
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
-import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -24,7 +23,7 @@ class AboutHiveViewModelTest{
     private val testDataList = MutableLiveData<List<Revision>>(listOf(Revision()))
     private var repository: MainRepository = mock {
         on { getHiveByIdLd(any()) } doReturn (testData)
-        on { getHiveRevisions(any()) } doReturn (testDataList)
+        on { getHiveRevisionsLd(any()) } doReturn (testDataList)
     }
 
     @get:Rule

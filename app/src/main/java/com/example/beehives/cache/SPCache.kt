@@ -8,6 +8,8 @@ import kotlin.reflect.KProperty
 @Singleton
 class SPCache(private val sp: SharedPreferences) {
 
+    fun getSP() = sp
+
     companion object{
 
         internal const val ARG_FIRST_RUN = "first_run"
@@ -24,6 +26,9 @@ class SPCache(private val sp: SharedPreferences) {
 
         internal const val ARG_UNITS = "units"
         internal const val ARG_UNITS_DEF = "metric"
+
+        internal const val ARG_BREED = "breed"
+        internal const val ARG_DEF_BREED = "Golden Italian"
     }
 
     var isFirstLaunch
@@ -37,6 +42,10 @@ class SPCache(private val sp: SharedPreferences) {
     var language
         get() = sp.getString(ARG_LANGUAGE, ARG_LANGUAGE_DEF)
         set(value) = sp.edit().putString(ARG_LANGUAGE, value).apply()
+
+    var breed
+        get() = sp.getString(ARG_BREED, ARG_DEF_BREED)
+        set(value) = sp.edit().putString(ARG_BREED, value).apply()
 
     var nightMode
         get() = sp.getBoolean(ARG_NIGHT_MODE, ARG_NIGHT_MODE_DEF)

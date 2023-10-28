@@ -1,5 +1,8 @@
 package com.example.beehives.view.adapters
 
+import android.content.res.Resources
+import android.graphics.Color
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.beehives.R
 import com.example.beehives.model.db.entities.Revision
 import com.example.beehives.utils.SEPARATOR
+import com.example.beehives.utils.SEPARATOR_SECONDARY
 import com.example.beehives.utils.TimeConverter
 import kotlinx.android.synthetic.main.item_for_revisions_recycler.view.*
 
@@ -30,36 +34,23 @@ class RevisionsAdapter (val callback : Callback)
         return revisions.size + 1
     }
 
-    private fun setHeaderBackground(view: View) {
-        view.setBackgroundResource(R.color.colorPrimary)
-    }
-
-    private fun setContentBackground(view: View) {
-        view.setBackgroundResource(R.color.colorBackground)
-    }
-
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
 
         if (position == 0) {
             holder.itemView.apply {
-                setHeaderBackground(date)
-                setHeaderBackground(frames)
-                setHeaderBackground(strength)
-                setHeaderBackground(note)
+                this.date.setTextAppearance(R.style.TextAppearance_MaterialComponents_Body1)
+                this.frames.setTextAppearance(R.style.TextAppearance_MaterialComponents_Body1)
+                this.strength.setTextAppearance(R.style.TextAppearance_MaterialComponents_Body1)
+                this.note.setTextAppearance(R.style.TextAppearance_MaterialComponents_Body1)
             }
         } else {
             //Revers adapter
             val revision = revisions[itemCount - (position + 1)]
-            val frm = revision.frames?.split(SEPARATOR)
 
             holder.itemView.apply {
-                setContentBackground(date)
-                setContentBackground(frames)
-                setContentBackground(strength)
-                setContentBackground(note)
-
                 date.text = time.longToStringShort(revision.date!!)
-                frames.text = resources.getString(R.string.frames_rev_recycler, frm!![0],frm[1],frm[2])
+//                frames.text = resources.getString(R.string.frames_rev_recycler, frm!![0],frm[1],frm[2])
+                frames.text = getFramesStr(revision.frames, resources)
                 strength.text = resources.getString(R.string.percents, revision.strength)
                 note.text = revision.note.toString()
                 holder.itemView.setOnClickListener {
@@ -85,5 +76,22 @@ class RevisionsAdapter (val callback : Callback)
                 callback.onItemClick(item)
             }
         }
+    }
+
+    private fun getFramesStr(str: String?, res: Resources): String {
+
+        var compStr = ""
+
+        str?.split(SEPARATOR_SECONDARY)?.let {
+            it.forEach {
+                it.split(SEPARATOR).let {
+                    if (it.size >= 3){
+                        compStr += res.getString(R.string.frames_rev_recycler, it[0],it[1],it[2])+"\n"
+                    }
+                }
+            }
+        }
+
+        return compStr
     }
 }

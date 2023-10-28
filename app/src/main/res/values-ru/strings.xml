@@ -1,11 +1,16 @@
 <resources>
-    <string name="app_name">BeeHives</string>
+    <string name="app_name">Honeycomb</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="cancel">Закрыть</string>
+    <string name="ok">OK</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="save">Сохранить</string>
+    <string name="enter_new_name">Введите новое название</string>
+
     <string name="share">Поделиться</string>
     <string name="settings">Настройки</string>
-    <string name="graphs">Графики</string>
     <string name="map">Карта</string>
     <string name="hives">Ульи</string>
     <string name="about">О программе</string>
@@ -44,4 +49,11 @@
     <string name="set_defaul_image">Сбросить изображение</string>
     <string name="delete_this_hive">Удалить</string>
     <string name="general">Общие</string>
+    <string name="enter_new_breed">Enter new breed</string>
+    <string name="charts">Графики</string>
+    <string name="chart">График</string>
+    <string name="bee_queens">Bee Queens</string>
+    <string name="bulletin_board">Bulletin board</string>
+    <string name="select_apiary">Select apiary</string>
+    <string name="add_notification">Add notification</string>
 </resources>

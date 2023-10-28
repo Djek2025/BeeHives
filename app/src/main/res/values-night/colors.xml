@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#FFD600</color>
-    <color name="colorPrimary">#FFAB00</color>
-    <color name="colorPrimaryDark">#FFAB00</color>
 
-    <color name="colorBackground">@android:color/background_dark</color>
+    <color name="primaryColor">#FFAB00</color>
+    <color name="primaryDarkColor">#FFAB00</color>
+    <color name="primaryTextColor">#FFFFFF</color>
+
+    <color name="toolbarColor">#80000000</color>
+    <color name="backgroundColor">#000000</color>
+
 </resources>

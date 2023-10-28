@@ -1,7 +1,6 @@
-<PreferenceScreen
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference/>
     <ListPreference/>
     <ListPreference/>
 
@@ -14,6 +13,12 @@
             app:key="language"
             app:title="@string/language"
             app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="Golden italian"
+            android:key="breed"
+            android:selectAllOnFocus="true"
+            android:title="Default breed" />
 
         <ListPreference
             app:defaultValue="metric"

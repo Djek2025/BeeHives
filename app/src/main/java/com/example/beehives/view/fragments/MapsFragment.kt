@@ -10,13 +10,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.example.beehives.App
 import com.example.beehives.R
 import com.example.beehives.databinding.FragmentMapsBinding
-import com.example.beehives.utils.InjectorUtils
-import com.example.beehives.utils.SEPARATOR
+import com.example.beehives.utils.*
 import com.example.beehives.viewModels.MapsViewModel
 import com.example.beehives.viewModels.SharedViewModel
-import com.example.beehives.utils.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -28,20 +27,18 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_maps.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MapsFragment : Fragment() {
 
-    private lateinit var viewModel : MapsViewModel
-    private lateinit var factory: ViewModelFactory
-    private lateinit var sharedViewModel : SharedViewModel
+    @Inject lateinit var viewModel : MapsViewModel
+    @Inject lateinit var sharedViewModel : SharedViewModel
     private lateinit var binding: FragmentMapsBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        factory = InjectorUtils.provideViewModelFactory(activity!!.application)
-        viewModel = ViewModelProvider(this, factory).get(MapsViewModel::class.java)
-        sharedViewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SharedViewModel::class.java)
+        (activity?.application as App).getComponent().inject(this)
     }
 //————————————————————————————————————————————————————————————————————————————————————————————————
 
@@ -49,7 +46,7 @@ class MapsFragment : Fragment() {
         googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(49.4285, 32.0620), 6f))
 
-        val icon = BitmapDescriptorFactory.fromResource(R.drawable.beehive)
+        val icon = BitmapDescriptorFactory.fromResource(R.drawable.bee_chair)
 
         val markerCenter = googleMap.addMarker(MarkerOptions()
             .position(googleMap.cameraPosition.target).icon(icon))
@@ -57,7 +54,7 @@ class MapsFragment : Fragment() {
         googleMap.setOnCameraMoveListener { markerCenter.position = googleMap.cameraPosition.target }
 
         when (sharedViewModel.mapRequest) {
-            "add" -> {
+            ADD_MAP_REQUEST -> {
                 floatingActionButtonCommit.setOnClickListener {
                     val target = googleMap.cameraPosition.target
                     viewModel.insertLocation(target.latitude, target.longitude)
@@ -65,11 +62,11 @@ class MapsFragment : Fragment() {
                     activity?.onBackPressed()
                 }
             }
-            "edit" -> {
+            EDIT_MAP_REQUEST -> {
                 floatingActionButtonCommit.setOnClickListener{
                     val target = googleMap.cameraPosition.target
                     GlobalScope.launch {
-                        val oldLoc: List<String> = viewModel.getApiaryById(viewModel.getCurrentApiaryId()).await().location!!.split(SEPARATOR)
+                        val oldLoc: List<String> = viewModel.getApiaryById(viewModel.getCurrentApiaryId()!!).await().location!!.split(SEPARATOR)
                         viewModel.updateLocation(oldLoc[0].toDouble(), oldLoc[1].toDouble(), target.latitude, target.longitude)
                         viewModel.updateApiaryLocation(target.latitude.toString(), target.longitude.toString())
                     }
@@ -111,7 +108,7 @@ class MapsFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        sharedViewModel.mapRequest = "show"
+        sharedViewModel.mapRequest = SHOW_MAP_REQUEST
     }
 
     @ColorInt

@@ -8,6 +8,7 @@ import android.widget.SeekBar
 import androidx.databinding.BindingAdapter
 import com.example.beehives.R
 import com.example.beehives.utils.SEPARATOR
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
@@ -59,9 +60,9 @@ fun setButtonInMap(view: FloatingActionButton, str: String){
 }
 
 @BindingAdapter("app:geoBtn")
-fun setAboutApiaryGeoBtn(view: FloatingActionButton, str: String?){
+fun setAboutApiaryGeoBtn(view: MaterialButton, str: String?){
     if (str.isNullOrEmpty() || str == SEPARATOR){
-        view.setImageResource(R.drawable.baseline_add_location_24)
-    } else view.setImageResource(R.drawable.baseline_edit_location_24)
+        view.setIconResource(R.drawable.baseline_add_location_24)
+    } else view.setIconResource(R.drawable.baseline_edit_location_24)
 
 }

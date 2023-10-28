@@ -1,0 +1,66 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/button_circle"
+    android:gravity="center"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toBottomOf="@+id/framesInstalledTextView">
+
+    <EditText
+        android:id="@+id/editTextFramesInstall"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/background_for_edit_text"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:backgroundTint="#41787878"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:minWidth="60dp" />
+
+    <TextView
+        android:id="@+id/textViewOf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/of"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        />
+
+    <EditText
+        android:id="@+id/editTextFramesInstallOf"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:background="@drawable/background_for_edit_text"
+        android:backgroundTint="#41787878"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:minWidth="60dp" />
+
+    <TextView
+        android:id="@+id/textViewSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/size_mm"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        />
+
+    <EditText
+        android:id="@+id/editTextFrameSize"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:background="@drawable/background_for_edit_text"
+        android:backgroundTint="#41787878"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:minWidth="60dp" />
+
+</LinearLayout>

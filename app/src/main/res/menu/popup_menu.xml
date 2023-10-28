@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/addNotification"
+        android:title="@string/add_notification" />
+
+    <item
         android:id="@+id/changeNameBreed"
         android:title="@string/change_name_breed" />
     <item

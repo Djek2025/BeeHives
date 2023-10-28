@@ -1,57 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="136dp"
-    android:background="@color/colorPrimary">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_margin="24dp"
-        android:src="@drawable/hive"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/change_apiary_btn"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/baseline_refresh_24"
-        android:backgroundTint="@color/common_google_signin_btn_text_light"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        android:background="#00000000"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:iconTint="@color/primaryTextColor"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:icon="@drawable/round_arrow_drop_down_24"
+        app:iconSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/header_apiary_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:paddingStart="8dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="8dp"
-        android:text="@{vm.currentApiary.name}"
-        android:textColor="@android:color/secondary_text_light"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/change_apiary_btn"
-        app:layout_constraintStart_toEndOf="@+id/imageView" />
+        android:layout_marginTop="32dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintBottom_toTopOf="@id/header_hives_count"
+        app:layout_constraintStart_toStartOf="@id/header_hives_count"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/header_hives_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="@{}"
-        android:textColor="@android:color/secondary_text_light"
-        app:layout_constraintStart_toStartOf="@+id/header_apiary_name"
-        app:layout_constraintTop_toBottomOf="@+id/header_apiary_name" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:layout_margin="8dp"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

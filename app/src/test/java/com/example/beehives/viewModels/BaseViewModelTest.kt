@@ -38,14 +38,14 @@ class BaseViewModelTest {
     @Test
     fun `init BaseViewModel and observe liveData`(){
         vm = BaseViewModel(application, repository)
-        Assert.assertEquals(vm.currentApiary.getOrAwaitValue(), apiary.value)
-        Assert.assertEquals(vm.currentApiaryHives.getOrAwaitValue(), apiaryHives.value)
+        Assert.assertEquals(vm.apiaries.getOrAwaitValue(), apiary.value)
+        Assert.assertEquals(vm.hives.getOrAwaitValue(), apiaryHives.value)
 
         //DataChange
         apiary.value = Apiary(2,"TEst")
         apiaryHives.value = listOf(Hive(2,3), Hive(3,4))
-        Assert.assertEquals(vm.currentApiary.getOrAwaitValue(), apiary.value)
-        Assert.assertEquals(vm.currentApiaryHives.getOrAwaitValue(), apiaryHives.value)
+        Assert.assertEquals(vm.apiaries.getOrAwaitValue(), apiary.value)
+        Assert.assertEquals(vm.hives.getOrAwaitValue(), apiaryHives.value)
 
 
         verify(repository, times(1)).getApiaryByIdLd(any())

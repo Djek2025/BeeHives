@@ -1,11 +1,15 @@
 package com.example.beehives.model.repositories
 
+import androidx.lifecycle.LiveData
 import com.example.beehives.model.db.dao.GeneralDao
 import com.example.beehives.model.db.entities.Apiary
+import com.example.beehives.model.db.entities.BeeQueen
 import com.example.beehives.model.db.entities.Hive
 import com.example.beehives.model.db.entities.Revision
 
 class MainRepository(private val dao: GeneralDao) {
+
+    fun getApiariesLd() = dao.getAllApiaries()
 
     fun getApiaryHives(apiaryId: Int) = dao.getApiaryHives(apiaryId)
 
@@ -13,7 +17,15 @@ class MainRepository(private val dao: GeneralDao) {
 
     fun getHiveByIdLd(id: Int) = dao.getHiveByIdLd(id)
 
+    fun getHiveRevisionsLd(hiveId: Int) = dao.getHiveRevisionsLd(hiveId)
+
     fun getHiveRevisions(hiveId: Int) = dao.getHiveRevisions(hiveId)
+
+    fun getRevisions(): LiveData<List<Revision>> = dao.getRevisions()
+
+    fun getFreeBeeQueen(): LiveData<List<BeeQueen>> = dao.getFreeBeeQueen()
+
+    fun getAllBeeQueen(): LiveData<List<BeeQueen>> = dao.getAllBeeQueen()
 
     suspend fun getApiaryById(id: Int) =  dao.getApiaryById(id)
 
@@ -29,7 +41,7 @@ class MainRepository(private val dao: GeneralDao) {
     suspend fun deleteHiveById(hiveId: Int){ dao.deleteHiveById(hiveId)}
     suspend fun deleteRevisionsByHiveId(hiveId: Int){ dao.deleteRevisionsByHiveId(hiveId)}
 
-    suspend fun getLastRevisionByHiveId(id: Int) = dao.getLastRevisionByHiveId(id)
+    fun getLastRevisionByHiveId(id: Int) = dao.getLastRevisionByHiveId(id)
 
 
     //——————————————————————————————————————————————————————————————————————————————————————————————————
@@ -68,4 +80,17 @@ class MainRepository(private val dao: GeneralDao) {
     suspend fun deleteRevision(revision: Revision) {
         dao.updateRevision(revision)
     }
+
+    suspend fun insertBeeQueen(beeQueen: BeeQueen){
+        dao.insertBeeQueen(beeQueen)
+    }
+
+    suspend fun updateBeeQueen(beeQueen: BeeQueen){
+        dao.updateBeeQueen(beeQueen)
+    }
+
+    suspend fun deleteBeeQueen(beeQueen: BeeQueen){
+        dao.deleteBeeQueen(beeQueen)
+    }
+
 }

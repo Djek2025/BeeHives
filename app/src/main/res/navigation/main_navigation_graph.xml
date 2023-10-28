@@ -63,7 +63,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.beehives.view.fragments.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment"/>
 
     <fragment
         android:id="@+id/mapsFragment"
@@ -83,9 +83,29 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+    <fragment
+        android:id="@+id/beeQueensFragment"
+        android:name="com.example.beehives.view.fragments.BeeQueensFragment"
+        android:label="fragment_bee_queens"
+        tools:layout="@layout/fragment_bee_queens"/>
+
+
+
     <fragment
         android:id="@+id/graphsFragment"
         android:name="com.example.beehives.view.fragments.ChartsFragment"
         android:label="fragment_graphs"
         tools:layout="@layout/fragment_charts" />
+
+    <fragment
+        android:id="@+id/navigation_share"
+        android:name="com.example.beehives.view.fragments.ShareFragment"
+        android:label="fragment_share" />
+
+    <dialog
+        android:id="@+id/dialogAbout"
+        android:name="com.example.beehives.view.dialogs.AboutDialog"
+        android:label="diaolog_about"/>
+
 </navigation>

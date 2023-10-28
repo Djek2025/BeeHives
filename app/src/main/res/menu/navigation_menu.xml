@@ -8,26 +8,35 @@
             android:icon="@drawable/round_storage_24"
             android:title="@string/hives" />
         <item
+            android:id="@+id/beeQueensFragment"
+            android:icon="@drawable/bee"
+            android:title="@string/bee_queens"/>
+        <item
             android:id="@+id/mapsFragment"
             android:icon="@drawable/baseline_place_24"
             android:title="@string/map" />
         <item
             android:id="@+id/graphsFragment"
-            android:icon="@drawable/baseline_poll_24"
-            android:title="@string/graphs" />
+            android:icon="@drawable/round_insights_24"
+            android:title="@string/charts" />
         <item
             android:id="@+id/navigation_todo_list"
             android:icon="@drawable/round_format_list_numbered_24"
             android:title="@string/todo_list"/>
         <item
             android:id="@+id/scanFragment"
-            android:icon="@drawable/round_local_offer_24"
+            android:icon="@drawable/round_qr_code_scanner_24"
             android:title="@string/scan_label"/>
     </group>
 
     <group
         android:id="@+id/group_divider"
         android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/bulletinBoardFragment"
+            android:icon="@drawable/round_dashboard_24"
+            android:title="@string/bulletin_board" />
         <item
             android:id="@+id/settingsFragment"
             android:icon="@drawable/baseline_settings_24"
@@ -39,7 +48,7 @@
             android:title="@string/share"/>
 
         <item
-            android:id="@+id/navigation_about"
+            android:id="@+id/dialogAbout"
             android:icon="@drawable/round_info_24"
             android:title="@string/about"/>
     </group>
